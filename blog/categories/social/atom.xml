@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Social | 0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/blog/categories/social/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-17T05:32:34+03:00</updated>
+  <updated>2015-01-18T01:06:32+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -60,7 +60,7 @@ Surprisingly, check of tweets marked &ldquo;keybase&rdquo; showed quite a number
 <p>The user clicks &ldquo;Done&rdquo; and he&rsquo;s finished and ready to tweet everybody how cool it is to dive in the world of cryptography.
 Did you actually spot the weak point? <em>The user was never asked to set the passphrase, which by default is the same as his password!</em>
 I mean, yeah, having several layers of properly implemented encryption might help to withstand attacks on one of algorithms for quite some time.
-But in fact, <em>all</em> of those assumptions are made on the fact the user password is not leaked. Having that password by any means be obtained by an attacker - and the game is pretty much over.
+But in fact, <em>all</em> of those assumptions are made on the fact the user password is not leaked. If that password by any means is obtained by an attacker - the game is pretty much over.
 An attacker will not only have access to the social network account (which is bad but criticality here is not that huge) but also to the stored secret key which could have been used in quite a lot of other applications.
 No &ldquo;AnyNumSec&rdquo; algorithms would keep the user safe from a single stolen account password (DNS? Phishing? Social engineering?) given the key is the same, which is the case. My suggestion here is at least to segregate account password and private key passphrase and/or put additional controls in place.</p>
 
@@ -70,7 +70,7 @@ No &ldquo;AnyNumSec&rdquo; algorithms would keep the user safe from a single sto
 
 <p><img class="center" src="/images/0_keybase_change_settings.png" width="600" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
 
-<p>Both of them look similar and has parameter &ldquo;a&rdquo; included:</p>
+<p>Both of them look similar and have parameter &ldquo;a&rdquo; included:</p>
 
 <p><em><a href="https://keybase.io/_/user/account?a=lgGS">https://keybase.io/_/user/account?a=lgGS</a>[base64-encoded id, email and several hashes]</em>.</p>
 
@@ -82,7 +82,7 @@ Well, it is possible to login under another account but victim still controls it
 
 <h3>It appeared that due to insufficient authorization (client-side checks only) it is possible to fully take control over victim&rsquo;s account following the steps:</h3>
 
-<p>0) Copy victim&rsquo;s encrypted private key. This step is not mandatory to achieve the task but still good-to-have one ;)</p>
+<p>0) Copy victim&rsquo;s encrypted private key. This step is not mandatory to achieve the goal but still good-to-have one ;)</p>
 
 <p>1) Once logged-in, an attacker is able to remove private/public keys without any confirmation. At this moment all the public proofs are gone.</p>
 
