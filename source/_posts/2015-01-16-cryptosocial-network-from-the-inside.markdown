@@ -42,7 +42,7 @@ There were enough articles on the Internet criticizing upload of private key to 
 The user clicks "Done" and he's finished and ready to tweet everybody how cool it is to dive in the world of cryptography.
 Did you actually spot the weak point? *The user was never asked to set the passphrase, which by default is the same as his password!*
 I mean, yeah, having several layers of properly implemented encryption might help to withstand attacks on one of algorithms for quite some time. 
-But in fact, *all* of those assumptions are made on the fact the user password is not leaked. Having that password by any means be obtained by an attacker - and the game is pretty much over. 
+But in fact, *all* of those assumptions are made on the fact the user password is not leaked. If that password by any means is obtained by an attacker - the game is pretty much over. 
 An attacker will not only have access to the social network account (which is bad but criticality here is not that huge) but also to the stored secret key which could have been used in quite a lot of other applications.
 No "AnyNumSec" algorithms would keep the user safe from a single stolen account password (DNS? Phishing? Social engineering?) given the key is the same, which is the case. My suggestion here is at least to segregate account password and private key passphrase and/or put additional controls in place.
 
@@ -52,7 +52,7 @@ Another major concern here is connected to a "golden key". The strucure of almos
 
 {% img center /images/0_keybase_change_settings.png 600 'image' 'images' %}
 
-Both of them look similar and has parameter "a" included: 
+Both of them look similar and have parameter "a" included: 
 
 *https://keybase.io/_/user/account?a=lgGS[base64-encoded id, email and several hashes]*.
 
@@ -64,7 +64,7 @@ Well, it is possible to login under another account but victim still controls it
 
 ###It appeared that due to insufficient authorization (client-side checks only) it is possible to fully take control over victim's account following the steps:
 
-0) Copy victim's encrypted private key. This step is not mandatory to achieve the task but still good-to-have one ;)
+0) Copy victim's encrypted private key. This step is not mandatory to achieve the goal but still good-to-have one ;)
 
 1) Once logged-in, an attacker is able to remove private/public keys without any confirmation. At this moment all the public proofs are gone.
 
