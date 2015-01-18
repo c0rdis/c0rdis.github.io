@@ -4,7 +4,7 @@
   <title><![CDATA[0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-18T20:16:21+03:00</updated>
+  <updated>2015-01-18T20:30:13+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -28,7 +28,7 @@ Feel free to contact me to complete the list with undescribed technique and/or c
 
 <ul>
 <li>software breakpoints - replacing original instruction with 0xCC and raising interrupt routine for debugger to handle it</li>
-<li>hardware breakpoints - DR0&hellip;DR4 debug registers provided by the process, as one of them is reached, INT 1 interrupt is raised by OS</li>
+<li>hardware breakpoints - DR0&hellip;DR4 debug registers provided by the processor, as one of them is reached, INT 1 interrupt is raised by OS</li>
 <li>memory breakpoints - guard pages, exception handler is called when accessing the specified page</li>
 </ul>
 
