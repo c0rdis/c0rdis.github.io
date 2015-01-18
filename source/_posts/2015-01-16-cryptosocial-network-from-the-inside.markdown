@@ -27,7 +27,7 @@ I'm not going to publish all the issues which currently exist there - some of th
  
  "*Lookup failed in query SELECT hash,val,ctime,type FROM merkle_blocks WHERE hash LIKE ? w/ [\"bad%\"]*"  is not enough why would anyone ever write a blog post about it :)
 
-After a short overview I spotted two major design problems which looked pretty dangerous to me.
+After a short overview, I spotted two major design problems which looked quite serious to me.
 
 ### 1) User password as a single point of failure
 
@@ -48,7 +48,7 @@ No "AnyNumSec" algorithms would keep the user safe from a single stolen account 
 
 ### 2) Golden "backdoorish" session 
 
-Another major concern here is connected to a "golden key". The strucure of almost all the emails sent from the server - i.e. reminders to verify social network account, changed e-mail, password reminders, post-registration and other services, contain a small footer with links - "Change Mail Settings" and "1-Click Unsubscribe".
+Another major concern here is about "golden key". The structure of almost all the emails sent from the server - i.e. reminders to verify social network account, changed e-mail, password reminders, post-registration and other services, contain a small footer with links - "Change Mail Settings" and "1-Click Unsubscribe".
 
 {% img center /images/0_keybase_change_settings.png 600 'image' 'images' %}
 
@@ -78,7 +78,7 @@ Two responses (valid/invalid) for the same functionality of checking password ar
 
 3) From this point, an attacker can exploit the fact passphrase and password are used interchargeably in the application - knowing correct passphrase (which an attacker has just set - see p.2), he is able to change *both* the password and the passphrase to any string.
 
-4) Finally, he also can change the e-mail now, making the "golden session" futile - and so the chances for a good guy to take his account back.
+4) Finally, he can also change the e-mail now, making the "golden session" futile - and so the chances for a good guy to take his account back.
 
 In such scenario an attacker doesn't break confidentiality and doesn't reveal the secret key (probably only saved an encrypted copy for good). 
 However, from the point of second part of "cryptosocialness", losing an account in a social network is still not the most pleasant thing, especially if you already got it set up and working for some time.
@@ -86,6 +86,6 @@ However, from the point of second part of "cryptosocialness", losing an account 
 
 
 ###As a conclusion: 
-there are certain defects in implementation, however, it doesn't change the fact of how brilliant the idea itself is. 
+there are certain design defects, however, it doesn't change the fact of how brilliant the idea itself is. 
 Besides, it is beta now, so this is exactly the time when good guys could make possibly-next-big-thing safer.
 If you want to get an invite, I still have a couple, so drop me a line... And if you're already registered, feel free to <a href="https://keybase.io/my">track me</a> ;)
