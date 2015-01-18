@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Social | 0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/blog/categories/social/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-18T13:21:08+03:00</updated>
+  <updated>2015-01-18T13:26:48+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -42,7 +42,7 @@ Surprisingly, check of tweets marked &ldquo;keybase&rdquo; showed quite a number
 
 <p> &ldquo;<em>Lookup failed in query SELECT hash,val,ctime,type FROM merkle_blocks WHERE hash LIKE ? w/ [&#34;bad%\&rdquo;]</em>&ldquo;  is not enough why would anyone ever write a blog post about it :)</p>
 
-<p>After a short overview I spotted two major design problems which looked pretty dangerous to me.</p>
+<p>After a short overview, I spotted two major design problems which looked quite serious to me.</p>
 
 <h3>1) User password as a single point of failure</h3>
 
@@ -66,7 +66,7 @@ No &ldquo;AnyNumSec&rdquo; algorithms would keep the user safe from a single sto
 
 <h3>2) Golden &ldquo;backdoorish&rdquo; session</h3>
 
-<p>Another major concern here is connected to a &ldquo;golden key&rdquo;. The structure of almost all the emails sent from the server - i.e. reminders to verify social network account, changed e-mail, password reminders, post-registration and other services, contain a small footer with links - &ldquo;Change Mail Settings&rdquo; and &ldquo;1-Click Unsubscribe&rdquo;.</p>
+<p>Another major concern here is about &ldquo;golden key&rdquo;. The structure of almost all the emails sent from the server - i.e. reminders to verify social network account, changed e-mail, password reminders, post-registration and other services, contain a small footer with links - &ldquo;Change Mail Settings&rdquo; and &ldquo;1-Click Unsubscribe&rdquo;.</p>
 
 <p><img class="center" src="/images/0_keybase_change_settings.png" width="600" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
 
@@ -95,14 +95,14 @@ Two responses (valid/invalid) for the same functionality of checking password ar
 
 <p>3) From this point, an attacker can exploit the fact passphrase and password are used interchargeably in the application - knowing correct passphrase (which an attacker has just set - see p.2), he is able to change <em>both</em> the password and the passphrase to any string.</p>
 
-<p>4) Finally, he also can change the e-mail now, making the &ldquo;golden session&rdquo; futile - and so the chances for a good guy to take his account back.</p>
+<p>4) Finally, he can also change the e-mail now, making the &ldquo;golden session&rdquo; futile - and so the chances for a good guy to take his account back.</p>
 
 <p>In such scenario an attacker doesn&rsquo;t break confidentiality and doesn&rsquo;t reveal the secret key (probably only saved an encrypted copy for good).
 However, from the point of second part of &ldquo;cryptosocialness&rdquo;, losing an account in a social network is still not the most pleasant thing, especially if you already got it set up and working for some time.</p>
 
 <h3>As a conclusion:</h3>
 
-<p>there are certain defects in implementation, however, it doesn&rsquo;t change the fact of how brilliant the idea itself is.
+<p>there are certain design defects, however, it doesn&rsquo;t change the fact of how brilliant the idea itself is.
 Besides, it is beta now, so this is exactly the time when good guys could make possibly-next-big-thing safer.
 If you want to get an invite, I still have a couple, so drop me a line&hellip; And if you&rsquo;re already registered, feel free to <a href="https://keybase.io/my">track me</a> ;)</p>
 ]]></content>
