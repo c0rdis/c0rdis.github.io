@@ -76,7 +76,7 @@ Two responses (valid/invalid) for the same functionality of checking password ar
 {% img center /images/0_keybase_possible_responses.png 800 350 'image' 'images' %}
 
 
-3) From this point, an attacker can exploit the fact passphrase and password are used interchargeably in the application - knowing correct passphrase (which an attacker has just set - see p.2), he is able to change *both* the password and the passphrase to any string.
+3) From this point, an attacker can exploit the fact passphrase and password are used interchangeably in the application - knowing correct passphrase (which an attacker has just set - see p.2), he is able to change *both* the password and the passphrase to any string.
 
 4) Finally, he can also change the e-mail now, making the "golden session" futile - and so the chances for a good guy to take his account back.
 
