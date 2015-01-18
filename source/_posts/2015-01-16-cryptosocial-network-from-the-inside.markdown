@@ -88,4 +88,4 @@ However, from the point of second part of "cryptosocialness", losing an account 
 ###As a conclusion: 
 there are certain defects in implementation, however, it doesn't change the fact of how brilliant the idea itself is. 
 Besides, it is beta now, so this is exactly the time when good guys could make possibly-next-big-thing safer.
-Oh, and btw, if you want to have an invite, I still have a couple... And if you're already registered, feel free to <a href="https://keybase.io/my">track me</a> ;)
+If you want to get an invite, I still have a couple, so drop me a line... And if you're already registered, feel free to <a href="https://keybase.io/my">track me</a> ;)
