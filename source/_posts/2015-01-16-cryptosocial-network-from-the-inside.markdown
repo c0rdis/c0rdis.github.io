@@ -5,7 +5,7 @@ date: 2015-01-17 23:45:57 +0300
 comments: true
 categories: crypto social
 ---
-*Disclaimer: all the vulnerabilities described here were reported to developers and published with their consent*
+*Disclaimer: all vulnerabilities described here were reported to developers and published with their consent*
 
 "Get a public key, safely, starting just with someone's social media username(s)." - this is what you likely to see if you visit the main page of an ambitious project named <a href="https://keybase.io">Keybase</a>. 
 A great idea to (finally) bring public-key cryptography en masse and make its use easy and fun. 
