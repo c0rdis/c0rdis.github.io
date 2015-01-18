@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Social | 0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/blog/categories/social/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-18T13:30:11+03:00</updated>
+  <updated>2015-01-18T13:38:06+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -18,7 +18,7 @@
     <link href="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
     <updated>2015-01-17T23:45:57+03:00</updated>
     <id>http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
-    <content type="html"><![CDATA[<p><em>Disclaimer: all the vulnerabilities described here were reported to developers and published with their consent</em></p>
+    <content type="html"><![CDATA[<p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
 
 <p>&ldquo;Get a public key, safely, starting just with someone&rsquo;s social media username(s).&rdquo; - this is what you likely to see if you visit the main page of an ambitious project named <a href="https://keybase.io">Keybase</a>.
 A great idea to (finally) bring public-key cryptography en masse and make its use easy and fun.
