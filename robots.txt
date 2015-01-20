@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://c0rdis.github.io/sitemap.xml 

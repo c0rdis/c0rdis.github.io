@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>&quot;Cryptosocial Network&quot; From the Inside - 0xAA - Random notes on security</title>
+  <meta name="author" content="Authorized Attacker">
+
+  
+  <meta name="description" content="Disclaimer: all vulnerabilities described here were reported to developers and published with their consent &ldquo;Get a public key, safely, starting &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="0xAA - Random notes on security" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">0xAA - Random notes on security</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="c0rdis.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/cv.pdf">CV</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/">OTNote</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">&quot;Cryptosocial Network&quot; From the Inside</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-17T23:45:57+03:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:45 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
+
+<p>&ldquo;Get a public key, safely, starting just with someone&rsquo;s social media username(s).&rdquo; - this is what you likely to see if you visit the main page of an ambitious project named <a href="https://keybase.io">Keybase</a>.
+A great idea to (finally) bring public-key cryptography en masse and make its use easy and fun.
+The project is in fact a public key directory wrapped by well-worked model of social networking and tightly bound to those networks itself.</p>
+
+<p><img class="center" src="/images/0_header_maria.jpg" width="600" title="image" alt="images"></p>
+
+<p>How does it work? From the high level, a user registers, uploads a key to the server (or creates a key pair right on the website - this is what will likely to be a common scenario) and then verifies his or her identity via popular social networks and personal websites by placing signed proofs there.
+Then, when by some reasons the key is not valid anymore, the user has to upload a new one and get verified again. In order to make such mechanism more efficient, creators implemented &ldquo;tracking&rdquo; - kind of following a user and receiving all the updates regarding his activity.</p>
+
+<h3>From cryptographical point, authors realized an interesting concept of &ldquo;TripleSec&rdquo; - conjunction of three-in-one sound crypto algorithms to make the protected data storage even more secure.</h3>
+
+<p>&ldquo;TripleSec is a simple, triple-paranoid, symmetric encryption library for Python, Node.js, Go, C#, and the browser. It encrypts data with Salsa 20, AES, and Twofish, so that a compromise of one or two of the ciphers will not expose the secret. Of course, encryption is only part of the story. TripleSec also: derives keys with scrypt to defend against password-cracking and rainbow tables; authenticates with HMAC to protect against adaptive chosen-ciphertext attacks; and in the JavaScript version supplements the native entropy sources for fear they are weak.&rdquo; (<a href="https://keybase.io/triplesec/">link</a>)</p>
+
+<h3>Currently the project is in its beta - only invited people are allowed to join and test it.</h3>
+
+<p>So that was double interesting for me to be one of them&hellip; Well, and grab a nice nickname ;)
+Surprisingly, check of tweets marked &ldquo;keybase&rdquo; showed quite a number of people ready to share the invite - in less than 10 mins I got one and started crawling around.</p>
+
+<p>I&rsquo;m not going to publish all the issues which currently exist there - some of them (seem) non-critical now, some XSS (seem) non-exploitable, and let&rsquo;s be honest to ourselves,</p>
+
+<p> &ldquo;<em>Lookup failed in query SELECT hash,val,ctime,type FROM merkle_blocks WHERE hash LIKE ? w/ [&#34;bad%\&rdquo;]</em>&ldquo;  is not enough why would anyone ever write a blog post about it :)</p>
+
+<p>After a short overview, I spotted two major design problems which looked quite serious to me.</p>
+
+<h3>1) User password as a single point of failure</h3>
+
+<p>There were enough articles on the Internet criticizing upload of private key to the server - I&rsquo;m not going to repeat it here. But what&rsquo;s really worrying here is the fact how it is presented to the end users:</p>
+
+<ul>
+<li>Most likely, &ldquo;normal&rdquo; people will not be using Terminal and will work in the browser - that&rsquo;s pretty much fine here and that&rsquo;s what creators were counting for.</li>
+<li>Most likely, &ldquo;normal&rdquo; people will generate the key in their browser - in order to do so, they will have to confirm their &ldquo;passphrase&rdquo;, which for instance is their password. Sure, no problem.</li>
+<li>Most likely, &ldquo;normal&rdquo; people will follow instructions and save the encrypted private key on the server. (Presumably) still ok.</li>
+</ul>
+
+
+<p><img class="center" src="/images/0_keybase_private.png" width="500" height="350" title="image" alt="images"></p>
+
+<p>The user clicks &ldquo;Done&rdquo; and he&rsquo;s finished and ready to tweet everybody how cool it is to dive in the world of cryptography.
+Did you actually spot the weak point? <em>The user was never asked to set the passphrase, which by default is the same as his password!</em>
+I mean, yeah, having several layers of properly implemented encryption might help to withstand attacks on one of algorithms for quite some time.
+But in fact, <em>all</em> of those assumptions are made on the fact the user password is not leaked. If that password by any means is obtained by an attacker - the game is pretty much over.
+An attacker will not only have access to the social network account (which is bad but criticality here is not that huge) but also to the stored secret key which could have been used in quite a lot of other applications.
+No &ldquo;AnyNumSec&rdquo; algorithms would keep the user safe from a single stolen account password (DNS? Phishing? Social engineering?) given the key is the same, which is the case. My suggestion here is at least to segregate account password and private key passphrase and/or put additional controls in place.</p>
+
+<h3>2) Golden &ldquo;backdoorish&rdquo; session</h3>
+
+<p>Another major concern here is about &ldquo;golden key&rdquo;. The structure of almost all the emails sent from the server - i.e. reminders to verify social network account, changed e-mail, password reminders, post-registration and other services, contain a small footer with links - &ldquo;Change Mail Settings&rdquo; and &ldquo;1-Click Unsubscribe&rdquo;.</p>
+
+<p><img class="center" src="/images/0_keybase_change_settings.png" width="600" title="image" alt="images"></p>
+
+<p>Both of them look similar and have parameter &ldquo;a&rdquo; included:</p>
+
+<p><em><a href="https://keybase.io/_/user/account?a=lgGS">https://keybase.io/_/user/account?a=lgGS</a>[base64-encoded id, email and several hashes]</em>.</p>
+
+<p>This parameter is responsible for a permanent user session - it is a replacement for the session token itself, and it doesn&rsquo;t expire unless the e-mail is not changed.
+Just to clarify: persistent session (= persistent access to user&rsquo;s account) is transferred in plaintext to the provided e-mail and stored in plaintext on the server.
+Consider forwarding any of those service e-mail by unaware user, unauthorized access to the mailbox or simple typo&hellip;
+Ok, what one could do with it?
+Well, it is possible to login under another account but victim still controls it&hellip; Or not?</p>
+
+<h3>It appeared that due to insufficient authorization (client-side checks only) it is possible to fully take control over victim&rsquo;s account following the steps:</h3>
+
+<p>0) Copy victim&rsquo;s encrypted private key. This step is not mandatory to achieve the goal but still good-to-have one ;)</p>
+
+<p>1) Once logged-in, an attacker is able to remove private/public keys without any confirmation. At this moment all the public proofs are gone.</p>
+
+<p>2) It is also possible to generate a new key pair with chosen passphrase - this is where auth bypass matters.
+Normally, to be able to generate a new pair, one should know current password.
+An attacker can simply spoof the response and make it look valid - and that would be enough for him to proceed.
+Two responses (valid/invalid) for the same functionality of checking password are presented on the screenshot below.</p>
+
+<p><img class="center" src="/images/0_keybase_possible_responses.png" width="800" height="350" title="image" alt="images"></p>
+
+<p>3) From this point, an attacker can exploit the fact passphrase and password are used interchangeably in the application - knowing correct passphrase (which an attacker has just set - see p.2), he is able to change <em>both</em> the password and the passphrase to any string.</p>
+
+<p>4) Finally, he can also change the e-mail now, making the &ldquo;golden session&rdquo; futile - and so the chances for a good guy to take his account back.</p>
+
+<p>In such scenario an attacker doesn&rsquo;t break confidentiality and doesn&rsquo;t reveal the secret key (probably only saved an encrypted copy for good).
+However, from the point of second part of &ldquo;cryptosocialness&rdquo;, losing an account in a social network is still not the most pleasant thing, especially if you already got it set up and working for some time.</p>
+
+<h3>As a conclusion:</h3>
+
+<p>there are certain design defects, however, it doesn&rsquo;t change the fact of how brilliant the idea itself is.
+Besides, it is beta now, so this is exactly the time when good guys could make possibly-next-big-thing safer.
+If you want to get an invite, I still have a couple, so drop me a line&hellip; And if you&rsquo;re already registered, feel free to <a href="https://keybase.io/my">track me</a> ;)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Authorized Attacker</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-17T23:45:57+03:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:45 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/crypto/'>crypto</a>, <a class='category' href='/blog/categories/social/'>social</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/" data-via="c0rdis" data-counturl="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/19/malware-techniques-cheat-sheet/" title="Next Post: Anti-debugging techniques cheat sheet">Anti-debugging techniques cheat sheet &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/19/malware-techniques-cheat-sheet/">Anti-debugging Techniques Cheat Sheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/17/cryptosocial-network-from-the-inside/">&quot;Cryptosocial Network&quot; From the Inside</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Authorized Attacker -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
