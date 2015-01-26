@@ -13,6 +13,8 @@ The project is in fact a public key directory wrapped by well-worked model of so
 
 {% img center /images/0_header_maria.jpg 600 'image' 'images' %}
 
+<!--more-->
+
 How does it work? From the high level, a user registers, uploads a key to the server (or creates a key pair right on the website - this is what will likely to be a common scenario) and then verifies his or her identity via popular social networks and personal websites by placing signed proofs there. 
 Then, when by some reasons the key is not valid anymore, the user has to upload a new one and get verified again. In order to make such mechanism more efficient, creators implemented "tracking" - kind of following a user and receiving all the updates regarding his activity.
 

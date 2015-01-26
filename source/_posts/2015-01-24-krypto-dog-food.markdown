@@ -5,13 +5,16 @@ date: 2015-01-26 22:57:42 +0300
 comments: true
 categories: crypto KDF
 ---
+
 My recent <a href="/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I'm going to present in the following post.
 
-{% img center /images/2_krypto_dog.jpg 400 'image' 'images' %}
+{% img center /images/2_krypto_dog.jpg 333 'image' 'images' %}
 
 KDF is a Key Derivation Function. As follows from the definition, such function is used to derive one or more keys from some secret value - *source of initial keying material*.
 Derived keys can then be used in different ways, such as to encrypt other important data, to built a MAC, or even as-is. 
 One example of using KDF is to generate a session key during TLS handshake. 
+
+<!--more-->
 
 Main functionality built in KDFs can be described as X-X: *extract-and-expand* paradigm.
 *Extraction* module takes non-uniformly random or pseudorandom source keying material as input and, by applying some function, "extracts" uniform key to operate with as primary input.
