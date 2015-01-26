@@ -1,0 +1,441 @@
+// Soothe Color Palette
+$soothe-gray-1         : #828282;
+$soothe-gray-1bg       : #0a0a0a;
+$soothe-gray-2         : #333333;
+$soothe-gray-2bg       : #111111;
+$soothe-gray-3         : #aaaaaa;
+$soothe-gray-3bg       : #141414;
+$soothe-gray-4         : #252525;
+$soothe-gray-4bg       : #171717;
+$soothe-gray-5         : #2a2a2a;
+$soothe-gray-5bg       : #1a1a1a;
+$soothe-gray-6         : #202020;
+$soothe-gray-6bg       : #1e1e1e;
+
+$soothe-red-1          : #d13120;
+$soothe-red-1bg        : #1D1515;
+$soothe-red-2          : #b23f1e;
+$soothe-red-2bg        : #251c1e;
+
+$soothe-brown-1        : #9f621d;
+$soothe-brown-1bg      : #2a1f1f;
+
+$soothe-orange-1       : #d97a35;
+$soothe-orange-1bg     : #1F1710;
+
+$soothe-yellow-1       : #deae3e;
+$soothe-yellow-1bg     : #18140C;
+
+$soothe-green-1        : #81af34;
+$soothe-green-1bg      : #1a2321;
+$soothe-green-2        : #4e9f75;
+$soothe-green-2bg      : #1a2321;
+
+$soothe-turquoise-1    : #11535F;
+$soothe-turquoise-2    : #082E36;
+
+$soothe-turquoise-1bg  : #05181C;
+$soothe-turquoise-2bg  : #041316;
+
+$soothe-blue-1         : #7e9fc9;
+$soothe-blue-1bg       : #1e252f;
+
+$soothe-blue-2         : #417598;
+$soothe-blue-2bg       : #1b333e;
+
+$soothe-blue-3         : #00959e;
+$soothe-blue-3bg       : #132228;
+
+$soothe-blue-4         : #365e7a;
+$soothe-blue-4bg       : #172028;
+
+$soothe-magenta-1      : #a737a7;
+
+$soothe-purple-1       : #7878b5;
+$soothe-purple-1bg     : #1D1B25;
+
+// special colors 
+$soothe-background     : #110F13;
+$soothe-alt-background : #111013;
+$soothe-foreground     : #dcdddd;
+$soothe-hl-line        : #11151a;
+$soothe-selection      : #11151a;
+
+$caption-gradient-top:    #d7d7d7;
+$caption-gradient-bottom: #bbbbbb;
+
+$base03: $sooth-background !default; //darkest blue
+$base02: $sooth-blue-4bg   !default; //dark blue
+
+$base01: #586e75          !default; //darkest gray
+$base00: #657b83          !default; //dark gray
+
+$base0:     #839496           !default; //medium gray
+$base1:     #93a1a1           !default; //medium light gray
+
+$base2:     #eee8d5           !default; //cream
+$base3:     #fdf6e3           !default; //white
+
+$pre-bg: $soothe-background;
+$pre-border: #345;
+
+article{
+  code, pre{
+      background: $pre-bg;
+      border: 1px solid $pre-border;
+        color: $base00;
+  }
+  code{
+      font-family: $font-mono;
+      font-size: 0.9em;
+      padding: 1px 3px;
+      margin: 0 3px;
+        color: #111;
+        background: rgba(0,0,0,0.1);
+        border: none;
+      @include border-radius(5px);
+  }
+  pre{
+      font-size: 1 / 0.9em;
+      line-height: 1.5;
+      margin-top: 10px;
+      padding: 5px 15px;
+      overflow-x: auto;
+      @include border-radius(5px);
+      code{
+          background: none;
+          border: none;
+          padding: 0;
+          margin: 0;
+            color: $base00;
+          @include border-radius(0);
+      }
+  }
+}
+
+figure.code{
+  background: $pre-bg;
+  border: 0px solid $caption-gradient-top;
+  margin-top: 10px;
+  padding: 5px 15px;
+
+  @include border-radius(5px);
+
+    table {
+        background: none;
+    }
+
+  figcaption{
+      font-size: 0.9em;
+      position: relative;
+      span{
+          margin: -5px -15px 0;
+          padding: 0px 15px;
+          display: block;
+            border-radius: 5px 5px 0px 0px;
+            border-top: 1px lighten($caption-gradient-top, 10%) solid;
+          @include background(linear-gradient(top, $caption-gradient-top, $caption-gradient-bottom));
+          &:empty{
+              display: none;
+          }
+      }
+      a{
+          position: absolute;
+          top: 0;
+          right: 0;
+      }
+  }
+  code, pre{
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      @include border-radius(0);
+  }
+  .highlight{
+      overflow-x: auto;
+  }
+  .line-numbers{
+      border-right: 1px solid $pre-border;
+      font-family: $font-mono;
+        font-size: 8px;
+        line-height: 16pt;
+        color: $soothe-blue-2;
+        background: $soothe-blue-4bg;
+      padding: 0 3px 0 15px;
+      text-align: right;
+  }
+  table{
+      border: none;
+      text-align: left;
+      margin-top: 0;
+      td{
+          text-align: left;
+      }
+  }
+  td.code{
+      width: 100%;
+      padding-left: 15px;
+  }
+}
+.entry-content .gist{
+  background: $pre-bg;
+  color: $color-gray01;
+  padding: 30px 15px 5px;
+  margin-top: 10px;
+  border: 1px solid $pre-border;
+  position: relative;
+  overflow: hidden;
+  @include border-radius(5px);
+  .gist-file{
+      margin: 0;
+      .gist-data{
+          background: transparent;
+          border: none;
+          pre{
+              font: 0.9em $font-mono;
+              line-height: 1.5;
+          }
+      }
+      .gist-meta{
+          font: 300 0.9em $font-default;
+          line-height: 1.5;
+          margin: 0 -16px -6px;
+          padding: 5px 15px;
+          @include background(linear-gradient(top, $pre-bg, $pre-border));
+          a{
+              color: $color-main;
+              &:first-of-type{
+                  position: absolute;
+                  top: 5px;
+                  right: 15px;
+                  z-index: 1;
+              }
+              &:nth-of-type(2){
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  padding: 5px 15px;
+                  width: 100%;
+                  @include background(linear-gradient(top, $pre-border, $pre-bg));
+              }
+          }
+      }
+  }
+}
+figure.code, .gist-highlight{
+  .c {
+      color:$base01 !important;
+      font-style: italic !important;
+  }
+  /* Comment */
+  .cm {
+      color:$base01 !important;
+      font-style: italic !important;
+  }
+  /* Comment.Multiline */
+  .cp {
+      color:$base01 !important;
+      font-style: italic !important;
+  }
+  /* Comment.Preproc */
+  .c1 {
+      color:$base01 !important;
+      font-style: italic !important;
+  }
+  /* Comment.Single */
+  .cs {
+      color:$base01 !important;
+      font-weight:bold !important;
+      font-style: italic !important;
+  }
+  /* Comment.Special */
+  .err {
+      color:$soothe-red-2 !important;
+      background: none !important;
+  }
+  /* Error */
+  .k {
+      color: $soothe-orange-1 !important;
+  }
+  /* Keyword */
+  .o {
+      color:$base1 !important;
+      font-weight: bold !important;
+  }
+  /* Operator */
+  .p {
+      color: $base1 !important;
+  }
+  /* Operator */
+  .ow {
+      color:$soothe-blue-3 !important;
+      font-weight: bold !important;
+  }
+  /* Operator.Word */
+  .gd {
+      color:$base1 !important;
+      background-color:mix($soothe-red-2,$base03,25%) !important;
+      display: inline-block;
+  }
+  /* Generic.Deleted */
+  .gd .x {
+      color:$base1 !important;
+      background-color:mix($soothe-red-2,$base03,35%) !important;
+      display: inline-block;
+  }
+  /* Generic.Deleted.Specific */
+  .ge {
+      color:$base1 !important;
+      font-style: italic !important;
+  }
+  /* Generic.Emph */
+  .gh {
+      color: $base01 !important;
+  }
+  /* Generic.Heading */
+  .gi {
+      color:$base1 !important;
+      background-color:mix($soothe-green-2,$base03,20%) !important;
+      display: inline-block;
+  }
+  /* Generic.Inserted */
+  .gi .x {
+      color:$base1 !important;
+      background-color:mix($soothe-green-2,$base03,40%) !important;
+      display: inline-block;
+  }
+  /* Generic.Inserted.Specific */
+  .gs {
+      color:$base1 !important;
+      font-weight: bold !important;
+  }
+  /* Generic.Strong */
+  .gu {
+      color: $soothe-purple-1 !important;
+  }
+  /* Generic.Subheading */
+  .kc {
+      color:$soothe-green-2 !important;
+      font-weight: bold !important;
+  }
+  /* Keyword.Constant */
+  .kd {
+      color: $soothe-blue-4 !important;
+  }
+  /* Keyword.Declaration */
+  .kp {
+      color:$soothe-orange-1 !important;
+      font-weight: bold !important;
+  }
+  /* Keyword.Pseudo */
+  .kr {
+      color:$soothe-magenta-1 !important;
+      font-weight: bold !important;
+  }
+  /* Keyword.Reserved */
+  .kt {
+      color: $soothe-blue-3 !important;
+  }
+  /* Keyword.Type */
+  .n {
+      color:$soothe-blue-4 !important;
+  }
+  .na {
+      color: $soothe-blue-4 !important;
+  }
+  /* Name.Attribute */
+  .nb {
+      color: $soothe-green-2 !important;
+  }
+  /* Name.Builtin */
+  .nc {
+      color: $soothe-magenta-1 !important;
+  }
+  /* Name.Class */
+  .no {
+      color: $soothe-yellow-1 !important;
+  }
+  /* Name.Constant */
+  .nl {
+      color:$soothe-green-2 !important;
+  }
+  .ne {
+      color:$soothe-blue-4 !important;
+      font-weight: bold !important;
+  }
+  /* Name.Exception */
+  .nf {
+      color:$soothe-blue-4 !important;
+      font-weight: bold !important;
+  }
+  /* Name.Function */
+  .nn {
+      color: $soothe-yellow-1 !important;
+  }
+  /* Name.Namespace */
+  .nt {
+      color:$soothe-blue-4 !important;
+      font-weight: bold !important;
+  }
+  /* Name.Tag */
+  .nx {
+      color:$soothe-yellow-1 !Important;
+  }
+  .vg {
+      color: $soothe-blue-4 !important;
+  }
+  /* Name.Variable.Global */
+  .vi {
+      color: $soothe-blue-4 !important;
+  }
+  /* Name.Variable.Instance */
+  .nv {
+      color: $soothe-blue-4 !important;
+  }
+  /* Name.Variable */
+  .mf {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.Number.Float */
+  .m {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.Number */
+  .mh {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.Number.Hex */
+  .mi {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.Number.Integer */
+  .s {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.String */
+  .sd {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.String.Doc */
+  .s2 {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.String.Double */
+  .se {
+      color: $soothe-red-2 !important;
+  }
+  /* Literal.String.Escape */
+  .si {
+      color: $soothe-blue-4 !important;
+  }
+  /* Literal.String.Interpol */
+  .sr {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.String.Regex */
+  .s1 {
+      color: $soothe-blue-3 !important;
+  }
+  /* Literal.String.Single */
+}
