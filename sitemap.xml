@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://c0rdis.github.io/blog/2015/01/26/krypto-dog-food/</loc>
+    <loc>http://antukh.com/blog/2015/01/26/krypto-dog-food/</loc>
     <lastmod>2015-01-26T22:57:42+03:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/blog/2015/01/19/malware-techniques-cheat-sheet/</loc>
+    <loc>http://antukh.com/blog/2015/01/19/malware-techniques-cheat-sheet/</loc>
     <lastmod>2015-01-19T20:23:45+03:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/</loc>
+    <loc>http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/</loc>
     <lastmod>2015-01-17T23:45:57+03:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/blog/archives/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/blog/archives/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/about/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/about/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/cv/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/cv/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/contact/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/contact/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://c0rdis.github.io/otnote/</loc>
-    <lastmod>2015-01-27T00:54:53+03:00</lastmod>
+    <loc>http://antukh.com/otnote/</loc>
+    <lastmod>2015-01-27T00:57:57+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
