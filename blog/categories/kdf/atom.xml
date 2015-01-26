@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kdf | 0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/blog/categories/kdf/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-26T23:00:37+03:00</updated>
+  <updated>2015-01-26T23:18:53+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -20,11 +20,14 @@
     <id>http://c0rdis.github.io/blog/2015/01/26/krypto-dog-food</id>
     <content type="html"><![CDATA[<p>My recent <a href="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
 
-<p><img class="center" src="/images/2_krypto_dog.jpg" width="400" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+<p><img class="center" src="/images/2_krypto_dog.jpg" width="333" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
 
 <p>KDF is a Key Derivation Function. As follows from the definition, such function is used to derive one or more keys from some secret value - <em>source of initial keying material</em>.
 Derived keys can then be used in different ways, such as to encrypt other important data, to built a MAC, or even as-is.
 One example of using KDF is to generate a session key during TLS handshake.</p>
+
+<!--more-->
+
 
 <p>Main functionality built in KDFs can be described as X-X: <em>extract-and-expand</em> paradigm.
 <em>Extraction</em> module takes non-uniformly random or pseudorandom source keying material as input and, by applying some function, &ldquo;extracts&rdquo; uniform key to operate with as primary input.

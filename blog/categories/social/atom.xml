@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Social | 0xAA - Random notes on security]]></title>
   <link href="http://c0rdis.github.io/blog/categories/social/atom.xml" rel="self"/>
   <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-26T23:00:37+03:00</updated>
+  <updated>2015-01-26T23:18:53+03:00</updated>
   <id>http://c0rdis.github.io/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -25,6 +25,9 @@ A great idea to (finally) bring public-key cryptography en masse and make its us
 The project is in fact a public key directory wrapped by well-worked model of social networking and tightly bound to those networks itself.</p>
 
 <p><img class="center" src="/images/0_header_maria.jpg" width="600" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<!--more-->
+
 
 <p>How does it work? From the high level, a user registers, uploads a key to the server (or creates a key pair right on the website - this is what will likely to be a common scenario) and then verifies his or her identity via popular social networks and personal websites by placing signed proofs there.
 Then, when by some reasons the key is not valid anymore, the user has to upload a new one and get verified again. In order to make such mechanism more efficient, creators implemented &ldquo;tracking&rdquo; - kind of following a user and receiving all the updates regarding his activity.</p>
