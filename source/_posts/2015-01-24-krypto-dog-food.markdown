@@ -3,7 +3,7 @@ layout: post
 title: "Easy way to get KDF (Krypto-Dog Food)"
 date: 2015-01-26 22:57:42 +0300
 comments: true
-categories: 
+categories: crypto KDF
 ---
 My recent <a href="/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I'm going to present in the following post.
 
