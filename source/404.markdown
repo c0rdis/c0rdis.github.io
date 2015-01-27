@@ -1,0 +1,18 @@
+---
+layout: page
+title: "That must be a typo..."
+comments: false
+sharing: false
+footer: false
+---
+
+<p style="text-align:right;font-family:Courrier,monospace;">
+  {% img center /images/404-not-found.png ENOENT %}
+</p>
+
+<style type="text/css">
+  /* avoiding to display the page's title, it kinda give it all away */
+  [role=article] > header {
+      display: none;
+  }
+</style>
