@@ -7,7 +7,7 @@ footer: false
 ---
 
 <p style="text-align:right;font-family:Courrier,monospace;">
-  {% img center /images/404-not-found.png ENOENT %}
+  {% img center /images/404-not-found.png Sad:( %}
 </p>
 
 <style type="text/css">
