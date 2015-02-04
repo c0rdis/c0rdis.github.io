@@ -1,0 +1,20 @@
+---
+layout: post
+title: "One-time Notes"
+date: 2015-02-05 10:30:07 +0300
+comments: false
+categories: otnote otn crypto privacy
+---
+Always wanted to have my own version of Privnote to be sure of how the data is handled on the server... Finally, <a href="https://aan.sh/otnote">here it is</a>.
+
+###Description:
+
+- connection is secured by HTTPS
+- note is encrypted on the client side with <a href="https://keybase.io/triplesec/">Triplesec</a> (Salsa20 + AES + Twofish) with randomly generated key - the server doesn't know what's inside
+- due to heavy crypto, it will take >$100k to break a single note
+- upon successful submission, a URL type of **{token}#{key}** is generated
+- direct access of the generated URL will show the decrypted note (using the **{key}**)
+- for security purposes, you may want to send the link without the key, so the receiver will have to enter the key manually to decrypt your message
+- there is only one shot - once the URL is accessed, the note is permanently deleted from the server
+
+Hope you'll find it useful.
