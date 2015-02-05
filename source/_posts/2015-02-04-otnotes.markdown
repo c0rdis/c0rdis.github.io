@@ -15,6 +15,6 @@ Always wanted to have my own version of Privnote to be sure of how the data is h
 - upon successful submission, a URL type of **{token}#{key}** is generated
 - direct access of the generated URL will show the decrypted note (using the **{key}**)
 - for security purposes, you may want to send the link without the key, so the receiver will have to enter the key manually to decrypt your message
-- there is only one shot - once the URL is accessed, the note is permanently deleted from the server
+- there is only one shot - once the URL is accessed, the note is permanently deleted from the server. Additionally, notes auto-expire in 72 hours after creation.
 
 Hope you'll find it useful.
