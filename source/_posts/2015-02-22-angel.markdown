@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Personal CyberAngel"
+date: 2015-02-23 22:19:26 +0300
+comments: false
+categories: twitter angel leaks
+---
+We all know how frustrating account theft could be. Just imagine - you read the news about <a href="http://gadgets.ndtv.com/internet/news/nearly-7-million-dropbox-account-passwords-reportedly-leaked-606494">yesterday's successful attack</a> 
+on some service with full database dump published on Pastebin, and you suddenly notice 
+that your e-mail is listed there too... 
+What if the news are one week/month/year old, and you didn't change your password since registration? 
+
+{% img center /images/4_angel.png 700 'image' 'images' %}
+  
+<!--more-->
+
+With free <a href="https://aan.sh/angel">Personal CyberAngel</a> service you can minimize the risks - notifications about any mentions of your e-mail/Twitter account on Pastebin-like 
+websites and hacker forums will be immediately sent to you, so you could take prompt actions and save a lot of your time recovering access to it.
+As a good angel, this one is constantly working and self-improving - list of leak sources is updated regularly with short breaks for coffee and blessings. 
+
+All my <a href="https://twitter.com/c0rdis">Twitter followers</a> get account subscription automatically - a private direct message will be 
+sent should any reference to your account be published. In case you would like to monitor your e-mail 
+address too, or make any suggestions, just let me know privately. Stay safe!
