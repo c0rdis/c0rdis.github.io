@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Kdf | 0xAA - Random notes on security]]></title>
+  <link href="http://antukh.com/blog/categories/kdf/atom.xml" rel="self"/>
+  <link href="http://antukh.com/"/>
+  <updated>2015-07-25T14:24:37+02:00</updated>
+  <id>http://antukh.com/</id>
+  <author>
+    <name><![CDATA[Authorized Attacker]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Easy Way to Get KDF (Krypto-Dog Food)]]></title>
+    <link href="http://antukh.com/blog/2015/01/26/krypto-dog-food/"/>
+    <updated>2015-01-26T20:57:42+01:00</updated>
+    <id>http://antukh.com/blog/2015/01/26/krypto-dog-food</id>
+    <content type="html"><![CDATA[<p>My recent <a href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
+
+<p><img class="center" src="/images/2_krypto_dog.jpg" width="333" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<p>KDF is a Key Derivation Function. As follows from the definition, such function is used to derive one or more keys from some secret value - <em>source of initial keying material</em>.
+Derived keys can then be used in different ways, such as to encrypt other important data, to built a MAC, or even as-is.
+One example of using KDF is to generate a session key during TLS handshake.</p>
+
+<!--more-->
+
+
+<p>Main functionality built in KDFs can be described as X-X: <em>extract-and-expand</em> paradigm.
+<em>Extraction</em> module takes non-uniformly random or pseudorandom source keying material as input and, by applying some function, &ldquo;extracts&rdquo; uniform key to operate with as primary input.
+This step can be omitted in case of initial keying material is already uniform, but it&rsquo;s often not the case.
+<em>Expansion</em> module, in turn, operates with previously generated (pseudo)random key and uses it to seed some function (not just any - see <a href="https://crypto.stanford.edu/~dabo/cs255/lectures/PRP-PRF.pdf">PRPs and PRFs</a>) to produce additional keys - those we expect to be derived.</p>
+
+<p>Based on provided initial keying material, KDFs are divided into two large groups:</p>
+
+<h3>KDFs based on some source key</h3>
+
+<p>These KDFs take source key as input, which is assumed to have enough entropy.</p>
+
+<p>&ldquo;Traditional&rdquo; KDF scheme operates with perfect source keys (those which do not need extraction step).
+Its additional input parameters are CTX (context string, depends on current application) and CTR (counter), and the scheme is based on simple concatenation of pseudorandom function (secure PRF) output.
+With such a function one could generate as many bits/keys as needed, and just cut off the rest when the goal is achieved.
+It can generally be described with the following pseudocode:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">KDF</span><span class="p">(</span><span class="n">SK</span><span class="p">,</span><span class="n">CTX</span><span class="p">,</span><span class="n">CTR</span><span class="p">)</span> <span class="o">=</span> <span class="n">K</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">K</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span> <span class="o">||</span> <span class="n">K</span><span class="p">(</span><span class="n">CTR</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">where</span>
+</span><span class='line'>    <span class="n">K</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span><span class="n">SK</span><span class="p">,(</span><span class="n">CTX</span><span class="o">||</span><span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">K</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span><span class="n">SK</span><span class="p">,(</span><span class="n">CTX</span><span class="o">||</span><span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>    <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">K</span><span class="p">(</span><span class="n">CTR</span><span class="p">)</span> <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span><span class="n">SK</span><span class="p">,(</span><span class="n">CTX</span><span class="o">||</span><span class="n">CTR</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The best known example of &ldquo;non-perfect-key-input&rdquo; KDFs is HKDF, or <a href="https://eprint.iacr.org/2010/264.pdf">HMAC-based Key Derivation Function.</a>
+Steps to derive the keys include extraction (full X-X scheme) and use of HMAC as secure PRF in traditional KDF scheme.
+Additionally, previously derived key is used as input to generate the succeeding one:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Extraction</span> <span class="p">:</span> <span class="n">k</span> <span class="o">=</span> <span class="n">HMAC</span><span class="p">(</span><span class="n">salt</span><span class="p">,</span> <span class="n">SK</span><span class="p">)</span>
+</span><span class='line'><span class="n">Expansion</span>  <span class="p">:</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">CTX</span><span class="p">,</span><span class="n">CTR</span><span class="p">)</span> <span class="o">=</span> <span class="n">K</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">K</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span> <span class="o">||</span> <span class="n">K</span><span class="p">(</span><span class="n">CTR</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">where</span>
+</span><span class='line'>                <span class="n">K</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="o">=</span> <span class="n">HMAC</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">CTX</span><span class="o">||</span><span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>                <span class="n">K</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="o">=</span> <span class="n">HMAC</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">K</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">CTX</span> <span class="o">||</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>                <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">K</span><span class="p">(</span><span class="n">CTR</span><span class="p">)</span> <span class="o">=</span> <span class="n">HMAC</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">K</span><span class="p">(</span><span class="n">CTR</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="n">CTX</span> <span class="o">||</span> <span class="n">CTR</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>KDFs of this type are commonly used for key diversification and are not acceptable for password storage.</p>
+
+<h3>Password-Based KDF</h3>
+
+<p>Another group of key derivation functions is based on user-supplied password as input.
+Since passwords do not have sufficient entropy, traditional KDFs as well as HKDF should not be used in this case, as derived keys will be vulnerable to dictionary attacks.
+To deal with a problem and compensate input weakness, two main PBKDF defenses were developed: use of salt and <em>slow hash functions</em>.</p>
+
+<p>Traditional approach to slow down the calculations here is based on increased number of iterations - so fast hash function runs over and over again until acceptable latency is reached.
+PCKS#5 describes PBKDF as follows:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">PBKDF1</span> <span class="o">=</span> <span class="n">H</span><span class="p">{</span><span class="n">c</span><span class="p">}(</span><span class="n">password</span><span class="o">||</span><span class="n">salt</span><span class="p">)</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">H</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;(</span><span class="n">H</span><span class="p">(</span><span class="n">password</span> <span class="o">||</span> <span class="n">salt</span><span class="p">))</span><span class="o">&amp;</span><span class="n">hellip</span><span class="p">;))))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">PBKDF2</span> <span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span> <span class="o">||</span> <span class="n">T</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">where</span>
+</span><span class='line'>    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">desired_key</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">PRF_output</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">T</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="n">U</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span> <span class="o">^</span> <span class="n">U</span><span class="o">&amp;</span><span class="n">copy</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">U</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span> <span class="n">password</span><span class="p">,</span> <span class="n">salt</span> <span class="o">||</span> <span class="n">INT_32_BE</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">U</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span> <span class="n">password</span><span class="p">,</span> <span class="n">U</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>    <span class="o">&amp;</span><span class="n">hellip</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">U</span><span class="o">&amp;</span><span class="n">copy</span><span class="p">;</span> <span class="o">=</span> <span class="n">PRF</span><span class="p">(</span> <span class="n">password</span><span class="p">,</span> <span class="n">U</span><span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>PBKDF1 is considered obsolete and currently replaced by its successor PBKDF2, as it could only produce derived keys of fixed, limited length.
+PBKDF2 in turn is used in many popular encryption implementations, including WPA/WPA2 to secure WiFi networks, Mac OS X for user passwords, Android filesystem encryption and many more.
+Typical WPA2 is based on HMAC-SHA1 PRF with network SSID as salt and number of iterations c = 4096, and produces 256-bit key.</p>
+
+<p>Nevertheless, since these functions require very little RAM, ASIC/GPU brute-force attacks are relatively cheap and effective against them, so more powerful KDFs were needed.
+The two most popular implementation of enhanced PBKDFs are bcrypt and scrypt which are described below.</p>
+
+<h3>bcrypt</h3>
+
+<p>First presented in 1999, this KDF is the default password hash algorithm in BSD and many other systems.
+It is based on Blowfish - fast block cipher with a notable remark - key changing is very slow there.
+Each new key requires pre-processing equivalent to encrypting about 4 kilobytes of text, which is very slow compared to other block ciphers.
+Altough that might be a problem for small embedded systems (e.g. some smartcards), such approach turned into benefit in PBKDFs: in order to conduct successful dictionary attack, much more time is needed.</p>
+
+<p>Simplified algorithm of bcrypt is presented below.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">EksBlowfishSetup</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>   <span class="n">state</span> <span class="o">=</span> <span class="n">InitState</span><span class="p">()</span>
+</span><span class='line'>   <span class="n">state</span> <span class="o">=</span> <span class="n">ExpandKey</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">salt</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">repeat</span> <span class="mi">2</span><span class="o">&lt;</span><span class="n">sup</span><span class="o">&gt;</span><span class="n">cost</span><span class="o">&lt;/</span><span class="n">sup</span><span class="o">&gt;:</span>
+</span><span class='line'>      <span class="n">state</span> <span class="o">=</span> <span class="n">ExpandKey</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">salt</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">state</span> <span class="o">=</span> <span class="n">ExpandKey</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">return</span> <span class="n">state</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">bcrypt</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>   <span class="n">state</span> <span class="o">=</span> <span class="n">EksBlowfishSetup</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span><span class="n">salt</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">ctext</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">OrpheanBeholderScryDoubt</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">repeat</span> <span class="mi">64</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">ctext</span> <span class="o">=</span> <span class="n">EncryptECB</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="n">ctext</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">return</span> <span class="n">Concatenate</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span><span class="n">salt</span><span class="p">,</span><span class="n">ctext</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Comparing to &ldquo;classic&rdquo; PBKDF, bcrypt requires larger (but still fixed to 4KB) amount of RAM and is slightly stronger against brute-force attacks.
+However, while bcrypt does a decent job at making life difficult for a GPU-enhanced attacker, it does little against a <a href="http://www.openwall.com/presentations/Passwords14-Energy-Efficient-Cracking/">FPGA-wielding attacker.</a></p>
+
+<h3>scrypt</h3>
+
+<p>The scrypt key derivation function was originally developed for use in the Tarsnap online backup system.
+It can use arbitrarily large amounts of memory and is therefore much more resistant to hardware brute-force attacks than alternative functions such as PBKDF2 or bcrypt.
+An amazing concept of <em>sequential memory-hard functions</em> is applied there - those can be computed by algorithms which use largest amount of storage possible, and cannot be parallelized effectively.</p>
+
+<p>This can really be considered as breakthrough - by estimations, cost of cracking scrypted 8-char password in a year is <a href="http://www.tarsnap.com/scrypt/scrypt.pdf">approximately 4400 times more expensive</a>
+than one converted with bcrypt.</p>
+
+<p>Its simplified structure can be described with the following pseudocode:</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">scrypt</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">keyLen</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// N - number of iterations for slow hash function      (CPU cost)</span>
+</span><span class='line'><span class="c1">// p - how many blocks is used                          (parallelization cost)</span>
+</span><span class='line'><span class="c1">// r - size of each block                               (memory cost)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>   <span class="n">blockLen</span> <span class="o">=</span> <span class="mi">1024</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">r</span>
+</span><span class='line'>   <span class="n">iterCount</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>   <span class="n">B</span> <span class="o">=</span> <span class="n">PBKDF2</span><span class="p">(</span><span class="n">HMAC_SHA256</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">iterCount</span><span class="p">,</span> <span class="n">p</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">blockLen</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ROMix</span><span class="p">(</span><span class="n">Salsa20</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">N</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">return</span> <span class="n">PBKDF2</span><span class="p">(</span><span class="n">HMAC_SHA256</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">iterCount</span><span class="p">,</span> <span class="n">keyLen</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Let&rsquo;s look at the internals.
+The large memory requirements of scrypt come from a large vector of pseudorandom bit strings that are generated as part of the algorithm (ROMix routine iteratively calls <em>BlockMix()</em> function which is desribed below).
+Once the vector is generated, the elements of it are accessed in a pseudo-random order and combined to produce the derived key.</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">BlockMix</span><span class="p">(</span> <span class="n">Salsa20</span><span class="p">,</span> <span class="n">B</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>   <span class="n">X</span> <span class="o">=</span> <span class="n">inverse</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">Y</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>   <span class="k">for</span> <span class="n">bi</span> <span class="ow">in</span> <span class="n">B</span><span class="p">:</span>
+</span><span class='line'>      <span class="n">X</span> <span class="o">=</span> <span class="n">Salsa20</span><span class="p">(</span><span class="n">X</span> <span class="o">^</span> <span class="n">bi</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">Y</span> <span class="o">+=</span> <span class="n">X</span>
+</span><span class='line'>   <span class="k">return</span> <span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>In order to get rid of large memory requirements, there is a significant trade-off in speed.
+This sort of time–memory trade-off can often be met in computer algorithms: you can increase speed at the cost of using more memory, or decrease memory requirements at the cost of performing more operations and taking longer.
+The idea behind scrypt is to deliberately make this trade-off costly in either direction.
+Thus an attacker could use an implementation that doesn&rsquo;t require many resources (and can therefore be massively parallelized with limited expense) but runs very slowly, or use an implementation that runs more quickly but
+has very large memory requirements and is therefore more expensive to parallelize. The main risk here (as always) is wrong implementation / poorly chosen parameters, which could reduce its <a href="http://blog.ircmaxell.com/2014/03/why-i-dont-recommend-scrypt.html">comparative benefits to zero.</a></p>
+
+<p>Although scrypt is somewhat new KDF, it&rsquo;s already rather common in the real-world applications.
+The first application was of course Tarsnap (N=2<sup>14</sup>, p=1, r=8) - secure online backup service, company-creator of scrypt.
+Probably the most well-known implementations are cryptocurrencies - Litecoin (N=2<sup>10</sup>, p=1, r=1), YACoin (N=2<sup>15</sup>, p=1, r=1) and many other altcoins.
+I feel I should mention Keybase application (N=2<sup>15</sup>, p=1, r=8) too, as it was the reason why I actually decided to write the article :)</p>
+
+<h2>Resume</h2>
+
+<p>KDFs is a nice cryptographic concept which, being properly implemented, can significantly improve overall level of security.
+It is important to understand when it is better to use KDFs in place of other crypto primitives.
+Notable applications of key derivation functions are:</p>
+
+<ol>
+<li>Key diversification - obtaining additional keys from source key</li>
+<li>Key stretching / key strengthening - password hashing approach to replace existing common hash functions used for verification</li>
+<li>Basis for a system RNG to seed a pseudorandom generator (PRG).</li>
+<li>Components of multiparty key-agreement protocols</li>
+</ol>
+
+
+<h2>Q&amp;A section</h2>
+
+<h4>What is the actual difference between hash and KDF?</h4>
+
+<p>First of all, KDFs are more general in their applications, and not all KDFs should actually replace hashes (for example, HKDF is primarily used for secondary keys derivation).
+Comparing to password-based KDFs, hashes are usually weaker (they do not satisfy randomness requirements) and, most important, are easier to bruteforce.
+Modern PBKDFs are much slower by design and thus should be given preference over simple hashing.</p>
+
+<h4>Why do we need additional keys if we already have strong source key?</h4>
+
+<p>This is quite common scenario when additional keys are needed - e.g. in TLS (unidirectional keys: MAC key, encryption key, IV&hellip;) or in CBC (nonces).
+In case an attacker obtains a derived key, he or she is not able to deduce either the input secret value or any of the other derived keys.</p>
+
+<h4>Why in the world do we need our input to be uniformly random in order to derive additional keys?</h4>
+
+<p>Well, it turns out that if the condition of input randomness is not met, the output might not look random.
+In context of keys used to secure the sessions, it might be possible for an attacker to anticipate some of the session keys and thereby break the session.</p>
+
+<p>P.S. If you still have any questions, feel free to ask, and I&rsquo;ll publish answers here.</p>
+]]></content>
+  </entry>
+  
+</feed>

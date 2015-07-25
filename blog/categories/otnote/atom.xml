@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Otnote | 0xAA - Random notes on security]]></title>
+  <link href="http://antukh.com/blog/categories/otnote/atom.xml" rel="self"/>
+  <link href="http://antukh.com/"/>
+  <updated>2015-07-25T14:24:37+02:00</updated>
+  <id>http://antukh.com/</id>
+  <author>
+    <name><![CDATA[Authorized Attacker]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[One-time Notes]]></title>
+    <link href="http://antukh.com/blog/2015/02/05/otnotes/"/>
+    <updated>2015-02-05T08:30:07+01:00</updated>
+    <id>http://antukh.com/blog/2015/02/05/otnotes</id>
+    <content type="html"><![CDATA[<p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
+
+<h3>Description:</h3>
+
+<ul>
+<li>connection is secured by HTTPS</li>
+<li>note is encrypted on the client side with <a href="https://keybase.io/triplesec/">Triplesec</a> (Salsa20 + AES + Twofish) with randomly generated key - the server doesn&rsquo;t know what&rsquo;s inside</li>
+<li>due to heavy crypto, it will take >$100k to break a single note</li>
+<li>upon successful submission, a URL type of <strong>{token}#{key}</strong> is generated</li>
+<li>direct access of the generated URL will show the decrypted note (using the <strong>{key}</strong>)</li>
+<li>for security purposes, you may want to send the link without the key, so the receiver will have to enter the key manually to decrypt your message</li>
+<li>there is only one shot - once the URL is accessed, the note is permanently deleted from the server. Additionally, notes auto-expire in 72 hours after creation.</li>
+</ul>
+
+
+<p>Hope you&rsquo;ll find it useful.</p>
+]]></content>
+  </entry>
+  
+</feed>

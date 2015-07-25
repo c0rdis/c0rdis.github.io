@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://antukh.com/sitemap.xml 
