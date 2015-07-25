@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Social | 0xAA - Random notes on security]]></title>
-  <link href="http://c0rdis.github.io/blog/categories/social/atom.xml" rel="self"/>
-  <link href="http://c0rdis.github.io/"/>
-  <updated>2015-01-19T07:03:59+03:00</updated>
-  <id>http://c0rdis.github.io/</id>
+  <link href="http://antukh.com/blog/categories/social/atom.xml" rel="self"/>
+  <link href="http://antukh.com/"/>
+  <updated>2015-07-25T13:55:40+02:00</updated>
+  <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[&quot;Cryptosocial Network&quot; From the Inside]]></title>
-    <link href="http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
-    <updated>2015-01-17T23:45:57+03:00</updated>
-    <id>http://c0rdis.github.io/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
+    <link href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
+    <updated>2015-01-17T21:45:57+01:00</updated>
+    <id>http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
     <content type="html"><![CDATA[<p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
 
 <p>&ldquo;Get a public key, safely, starting just with someone&rsquo;s social media username(s).&rdquo; - this is what you likely to see if you visit the main page of an ambitious project named <a href="https://keybase.io">Keybase</a>.
@@ -25,6 +25,9 @@ A great idea to (finally) bring public-key cryptography en masse and make its us
 The project is in fact a public key directory wrapped by well-worked model of social networking and tightly bound to those networks itself.</p>
 
 <p><img class="center" src="/images/0_header_maria.jpg" width="600" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<!--more-->
+
 
 <p>How does it work? From the high level, a user registers, uploads a key to the server (or creates a key pair right on the website - this is what will likely to be a common scenario) and then verifies his or her identity via popular social networks and personal websites by placing signed proofs there.
 Then, when by some reasons the key is not valid anymore, the user has to upload a new one and get verified again. In order to make such mechanism more efficient, creators implemented &ldquo;tracking&rdquo; - kind of following a user and receiving all the updates regarding his activity.</p>

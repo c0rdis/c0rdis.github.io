@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Contact - 0xAA - Random notes on security</title>
+  <title>One-time Notes - 0xAA - Random notes on security</title>
   <meta name="author" content="Authorized Attacker">
 
   
-  <meta name="description" content="Contact Jan 16th, 2015 10:13 pm Jan 16th, 2015 10:13 pm Tweet About Me Alexander is a passionate Security Expert for over 5 years (formally), always &hellip;">
+  <meta name="description" content="Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, here it is. Description: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://antukh.com/contact/">
+  <link rel="canonical" href="http://antukh.com/blog/2015/02/05/otnotes/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="0xAA - Random notes on security" type="application/atom+xml">
@@ -67,44 +67,87 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Contact</h1>
-    <p class="meta">
-
-
-
-
-<time class='entry-date' datetime='2015-01-16T22:13:00+01:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:13 pm</span></time></p>
-  </header>
-  
-  
-
-  
-    <footer>
+    
+      <h1 class="entry-title">One-time Notes</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
 
-<time class='entry-date' datetime='2015-01-16T22:13:00+01:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:13 pm</span></time>
+<time class='entry-date' datetime='2015-02-05T08:30:07+01:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:30 am</span></time>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
+
+<h3>Description:</h3>
+
+<ul>
+<li>connection is secured by HTTPS</li>
+<li>note is encrypted on the client side with <a href="https://keybase.io/triplesec/">Triplesec</a> (Salsa20 + AES + Twofish) with randomly generated key - the server doesn&rsquo;t know what&rsquo;s inside</li>
+<li>due to heavy crypto, it will take >$100k to break a single note</li>
+<li>upon successful submission, a URL type of <strong>{token}#{key}</strong> is generated</li>
+<li>direct access of the generated URL will show the decrypted note (using the <strong>{key}</strong>)</li>
+<li>for security purposes, you may want to send the link without the key, so the receiver will have to enter the key manually to decrypt your message</li>
+<li>there is only one shot - once the URL is accessed, the note is permanently deleted from the server. Additionally, notes auto-expire in 72 hours after creation.</li>
+</ul>
+
+
+<p>Hope you&rsquo;ll find it useful.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://antukh.com/contact/index.html" data-via="c0rdis" data-counturl="http://antukh.com/contact/index.html" >Tweet</a>
+
+<span class="byline author vcard">Posted by <span class="fn">Authorized Attacker</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T08:30:07+01:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:30 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/crypto/'>crypto</a>, <a class='category' href='/blog/categories/otn/'>otn</a>, <a class='category' href='/blog/categories/otnote/'>otnote</a>, <a class='category' href='/blog/categories/privacy/'>privacy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://antukh.com/blog/2015/02/05/otnotes/" data-via="c0rdis" data-counturl="http://antukh.com/blog/2015/02/05/otnotes/" >Tweet</a>
   
   
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2015/01/26/krypto-dog-food/" title="Previous Post: Easy way to get KDF (Krypto-Dog Food)">&laquo; Easy way to get KDF (Krypto-Dog Food)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/02/23/angel/" title="Next Post: Personal CyberAngel">Personal CyberAngel &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
 
 </div>
