@@ -4,7 +4,7 @@
   <title><![CDATA[0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-02-22T23:33:50+03:00</updated>
+  <updated>2015-07-25T13:55:40+02:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Personal CyberAngel]]></title>
     <link href="http://antukh.com/blog/2015/02/23/angel/"/>
-    <updated>2015-02-23T22:19:26+03:00</updated>
+    <updated>2015-02-23T20:19:26+01:00</updated>
     <id>http://antukh.com/blog/2015/02/23/angel</id>
     <content type="html"><![CDATA[<p>We all know how frustrating account theft could be. Just imagine - you read the news about <a href="http://gadgets.ndtv.com/internet/news/nearly-7-million-dropbox-account-passwords-reportedly-leaked-606494">yesterday&rsquo;s successful attack</a>
 on some service with full database dump published on Pastebin, and you suddenly notice
@@ -41,7 +41,7 @@ address too, or make any suggestions, just let me know privately. Stay safe!</p>
   <entry>
     <title type="html"><![CDATA[One-time Notes]]></title>
     <link href="http://antukh.com/blog/2015/02/05/otnotes/"/>
-    <updated>2015-02-05T10:30:07+03:00</updated>
+    <updated>2015-02-05T08:30:07+01:00</updated>
     <id>http://antukh.com/blog/2015/02/05/otnotes</id>
     <content type="html"><![CDATA[<p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
 
@@ -65,7 +65,7 @@ address too, or make any suggestions, just let me know privately. Stay safe!</p>
   <entry>
     <title type="html"><![CDATA[Easy Way to Get KDF (Krypto-Dog Food)]]></title>
     <link href="http://antukh.com/blog/2015/01/26/krypto-dog-food/"/>
-    <updated>2015-01-26T22:57:42+03:00</updated>
+    <updated>2015-01-26T20:57:42+01:00</updated>
     <id>http://antukh.com/blog/2015/01/26/krypto-dog-food</id>
     <content type="html"><![CDATA[<p>My recent <a href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
 
@@ -339,7 +339,7 @@ In context of keys used to secure the sessions, it might be possible for an atta
   <entry>
     <title type="html"><![CDATA[Anti-debugging Techniques Cheat Sheet]]></title>
     <link href="http://antukh.com/blog/2015/01/19/malware-techniques-cheat-sheet/"/>
-    <updated>2015-01-19T20:23:45+03:00</updated>
+    <updated>2015-01-19T18:23:45+01:00</updated>
     <id>http://antukh.com/blog/2015/01/19/malware-techniques-cheat-sheet</id>
     <content type="html"><![CDATA[<p>It&rsquo;s been quite a while I analyzed malware last time, so I decided to refresh my knowledge and write a short post on common x86 malware anti-debugging techniques.
 Techniques here do not include obfuscation like false branches, spaghetti code etc., and present an extract of popular ways to kick debugger&rsquo;s ass.
@@ -444,7 +444,7 @@ Feel free to contact me to complete the list with undescribed technique and/or c
   <entry>
     <title type="html"><![CDATA[&quot;Cryptosocial Network&quot; From the Inside]]></title>
     <link href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
-    <updated>2015-01-17T23:45:57+03:00</updated>
+    <updated>2015-01-17T21:45:57+01:00</updated>
     <id>http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
     <content type="html"><![CDATA[<p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
 

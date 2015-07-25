@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Crypto | 0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/blog/categories/crypto/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-02-22T23:33:50+03:00</updated>
+  <updated>2015-07-25T13:55:40+02:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[One-time Notes]]></title>
     <link href="http://antukh.com/blog/2015/02/05/otnotes/"/>
-    <updated>2015-02-05T10:30:07+03:00</updated>
+    <updated>2015-02-05T08:30:07+01:00</updated>
     <id>http://antukh.com/blog/2015/02/05/otnotes</id>
     <content type="html"><![CDATA[<p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
 
@@ -40,7 +40,7 @@
   <entry>
     <title type="html"><![CDATA[Easy Way to Get KDF (Krypto-Dog Food)]]></title>
     <link href="http://antukh.com/blog/2015/01/26/krypto-dog-food/"/>
-    <updated>2015-01-26T22:57:42+03:00</updated>
+    <updated>2015-01-26T20:57:42+01:00</updated>
     <id>http://antukh.com/blog/2015/01/26/krypto-dog-food</id>
     <content type="html"><![CDATA[<p>My recent <a href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
 
@@ -304,7 +304,7 @@ In context of keys used to secure the sessions, it might be possible for an atta
   <entry>
     <title type="html"><![CDATA[&quot;Cryptosocial Network&quot; From the Inside]]></title>
     <link href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
-    <updated>2015-01-17T23:45:57+03:00</updated>
+    <updated>2015-01-17T21:45:57+01:00</updated>
     <id>http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
     <content type="html"><![CDATA[<p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
 
