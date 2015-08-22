@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Deanonymization Made Simple - 0xAA - Random notes on security</title>
+  <meta name="author" content="Authorized Attacker">
+
+  
+  <meta name="description" content="cbcf9dde327c475d99627c87f58cab7ac6689164bf2fe7734c10c78005ed118e == sha256(&ldquo;[10.08.2015] I&rsquo;ve discovered that about 2% of the known &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://antukh.com/blog/2015/08/22/dark-appsec/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="0xAA - Random notes on security" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">0xAA - Random notes on security</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a></li>
+  
+    <li><a href="mailto:alexander@antukh.com" rel="subscribe-email" title="Contact me">Email</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="antukh.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/cv.pdf">CV</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="https://aan.sh/otn">OneTimeNotes</a></li>
+  <li><a href="https://aan.sh/angel">Personal CyberAngel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Deanonymization Made Simple</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-22T21:44:25+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:44 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://twitter.com/c0rdis/status/630705659848302592">cbcf9dde327c475d99627c87f58cab7ac6689164bf2fe7734c10c78005ed118e</a> == sha256(&ldquo;[10.08.2015] I&rsquo;ve discovered that about 2% of the known darkweb is controlled by one organization.&rdquo;)</p>
+
+<p><img class="center" src="/images/5_dark_web.jpg" width="600" title="image" alt="images"></p>
+
+<!--more-->
+
+
+<p>Reading articles of deanonymization of hidden services by <a href="http://40.media.tumblr.com/cd025e4b9b6db50cf53d21a7af5e5568/tumblr_nq7y4s0aMQ1uygu1vo1_1280.png">controlling certain nodes</a>
+or conducting <a href="http://conference.hitb.org/hitbsecconf2015ams/wp-content/uploads/2015/02/D2T2-Filippo-Valsorda-and-George-Tankersly-Non-Hidden-Hidden-Services-Considered-Harmful.pdf">correlation attacks</a>,
+I came to an idea that in certain cases it might be much easier to break anonymity. Just by having the same vulnerabilities as in &ldquo;clearnet&rdquo;, applications can expose sensitive information
+and let an attacker gather data from the system and deanonymize the target, with certain &ldquo;darknet&rdquo; specifics in the approach.</p>
+
+<p>According to the results of the recent HyperionGray research of <a href="http://alex.hyperiongray.com/posts/289994-scanning-the-dark-web">scanning the darkweb with PunkSPIDER</a>,
+approximate number of alive dark services is about 7000. The guys took alive and not-so-hidden services and started to scan those for serious vulnerabilities.
+I&rsquo;ve started my own research with slightly different approach - in opposite to searching for critical vulnerabilities like OSCI/SQLi,
+I&rsquo;ve taken a closer look to conventionally low-risk information disclosure.</p>
+
+<p>For that I&rsquo;ve written a simple Python script which, when provided with server/framework, would enumerate accessible files and folders and probably discover certain leaks of server information.
+To my surprise, fair amount of them actually had quite lame generic server authorization/configuration issues up to world-readable <em>/phpinfo.php</em>.</p>
+
+<p><img class="center" src="/images/5_phpinfo_hacking.png" width="900" title="image" alt="images"></p>
+
+<p>The most helpful and common fail pattern was, however, the default Apache pages such as <em>/server-info</em> and <em>/server-status</em>. Whereas the first
+one would give you a nice picture of the server information with current settings, modules and its configuration (and IP address, of course),
+the second is more valuable in terms of current connections. <strong>In a given set of 7k+ alive services almost 500 of them (about 7%) appeared to be
+vulnerable.</strong> Further analysis showed that large-traffic applications are affected, too.</p>
+
+<table>
+<tr>
+  <td><img class="left" src="/images/5_status_traffic.jpg" width="350" title="image" alt="images"></td>
+  <td><img class="right" src="/images/5_status_traffic_2.png" width="420" title="image" alt="images"></td>
+</tr>
+</table>
+
+
+<p></p>
+
+<p>For one of the websites I&rsquo;ve noticed, that it has several other hosts with completely different kinds
+of subjects. The only thing which was the same, were those <em>/server-status</em> pages all among them. Quick gather of references on those revealed more than 300
+unique services with traffic as much as 50+ Gb per day. Interestingly enough, most of them were referenced from HiddenWiki page,
+which also resided on the same server. A weaver! As appeared later, it was a hidden hosting service, where anybody could pay certain amount of BTC and rent
+it for his own dark intentions. Obviously, such disclosure makes it possible for deanonymizer to list all the queries to a particular domain on the hosting
+server and view parameters with corresponding values for GET requests with full paths to closed parts of the application.</p>
+
+<p>I was lucky again when my script warned me of an external IP address, which accessed <em>&ldquo;vps.server.com&rdquo;</em>.
+If you&rsquo;ve ever had a look to access.log of your web server, for sure you&rsquo;ve noticed a lot of connections of all kinds of bots which scan the Internet for
+vulnerabilities. That was probably the first time in my life, when I was really thankful to them. It meant the following:</p>
+
+<ul>
+<li>clearnet service is also available on port 80</li>
+<li>if I manage to access it, my watcher script can isolate it</li>
+</ul>
+
+
+<p>One of the options to hit that is to basically try to scan the whole Internet on port 80. Sounds crazy? Hold on, check these projects first:
+<a href="https://zmap.io/">Zmap</a> and <a href="https://github.com/robertdavidgraham/masscan">Massscan</a>!</p>
+
+<p>What&rsquo;s basically needed, is to access a specific IP address with certain marker, which would identify this IP address uniquely, and monitor
+such access on <em>/server-status</em> of a target server. I assumed that probably the easiest way to do it is to use the following vector: <a href="http://xx.xx.xx.xx/xx.xx.xx.xx.">http://xx.xx.xx.xx/xx.xx.xx.xx.</a>
+Results haven&rsquo;t made me wait too long:</p>
+
+<p><img class="center" src="/images/5_ip_access.png" width="800" title="image" alt="images"></p>
+
+<p>Of course, this is not the only way to achieve that. The following scenario is even simpler: many clearnet hosts on the same server are used to redirect traffic to darknet, and
+this also helps a lot to deanonymize the target. One approach is quite similar to the previous one but more universal in a way that you don&rsquo;t really need to have control over status page.
+It is enough to parse those responses, which return <em>30x</em> code, and check for presense of &ldquo;.onion&rdquo; string in the &ldquo;Location:&rdquo; header:</p>
+
+<p><img class="center" src="/images/5_location.png" width="800" title="image" alt="images"></p>
+
+<p>For the laziest of researchers, Shodan might help, too:</p>
+
+<p><img class="center" src="/images/5_shodan.png" width="800" title="image" alt="images"></p>
+
+<p>Finally, researcher can always find a vulnerability in one weak service, and get access to the whole hosting server. Let&rsquo;s say, I believe it&rsquo;s possible ;)</p>
+
+<p><img class="center" src="/images/5_shell.jpg" width="800" title="image" alt="images"></p>
+
+<h2>Conclusion</h2>
+
+<p>The goal of my research was to show that often deanonymization of a hidden service (or even a network) can be done trivially by applying the same pentest approach as in clearnet.
+Main difference here is that usually non-critical information disclosure plays much more significant role than for &ldquo;normal&rdquo; web applications.
+To summarize, at least the following easy ways may let researcher deanonymize a darknet service:</p>
+
+<ul>
+<li>instant win (server-info, phpinfo, &hellip;)</li>
+<li>status page access (x.x.x.x/x.x.x.x)</li>
+<li>(un)expected redirect (30x clearnet to darknet)</li>
+<li>app-level pwnage (missing patches, vulnerabilities in the code, default framework pages&hellip;)</li>
+</ul>
+
+
+<p>P.S. If you&rsquo;re interested in the topic, you may also want to check <a href="https://www.thecthulhu.com/setting-up-a-hidden-service-with-nginx/">TheCtulhu&rsquo;s blog</a> and find decent instructions on configuring nginx server to host a hidden service in a more secure way.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Authorized Attacker</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-22T21:44:25+02:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:44 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://antukh.com/blog/2015/08/22/dark-appsec/" data-via="c0rdis" data-counturl="http://antukh.com/blog/2015/08/22/dark-appsec/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/02/23/angel/" title="Previous Post: Personal CyberAngel">&laquo; Personal CyberAngel</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img class="center" src="/images/avatar.jpeg" width=200 title="image" alt="images">
+  <p>Alexander is a passionate Security Expert for over 6 years (formally), always looking towards original challenges and opportunities to learn something new.
+    He is a founder of <a href="http://defcon-moscow.org">Defcon Moscow</a> group and current leader of <a href="https://www.owasp.org/index.php/Russia">OWASP Russia</a> Local Chapter. 
+    His special interest is in the field of applied cryptography and in what is called &#8220;ethical hacking&#8221;.
+    <br>
+    <br>
+    Consider following me:
+    <a href="https://twitter.com/c0rdis" rel="me"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/antukh" rel="me"><i class="fa fa-linkedin-square"></i></a>
+    <a href="https://keybase.io/my" rel="me"><i class="fa fa-key"></i></a></p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/22/dark-appsec/">Deanonymization Made Simple</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/23/angel/">Personal CyberAngel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/05/otnotes/">One-time Notes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/krypto-dog-food/">Easy Way to Get KDF (Krypto-Dog Food)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/19/malware-techniques-cheat-sheet/">Anti-debugging Techniques Cheat Sheet</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Authorized Attacker -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
