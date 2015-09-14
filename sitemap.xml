@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://antukh.com/blog/2015/09/10/lifting-the-veil/</loc>
+    <lastmod>2015-09-10T17:02:10+02:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://antukh.com/blog/2015/08/22/dark-appsec/</loc>
     <lastmod>2015-08-22T21:44:25+02:00</lastmod>
     <priority>0.8</priority>
@@ -32,37 +37,37 @@
   </url>
   <url>
     <loc>http://antukh.com/404.html</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://antukh.com/blog/archives/</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://antukh.com/</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://antukh.com/contact/</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://antukh.com/cv/</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://antukh.com/about/</loc>
-    <lastmod>2015-08-22T10:36:11+02:00</lastmod>
+    <lastmod>2015-09-14T18:26:22+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
