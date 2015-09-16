@@ -10,7 +10,7 @@ of publicly gathered hidden services were misconfigured to disclose */server-sta
 interesting to me to publish those.
 
 *I would like to thank my friends <a href="https://twitter.com/josephfcox">@josephfcox</a> and <a href="https://twitter.com/flexlibris">@flexlibris</a> for providing me with invites 
-to <censored\> and making this article possible.*
+to Riseup and making this article possible.*
 
 <!--more-->
 
