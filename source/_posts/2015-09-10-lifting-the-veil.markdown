@@ -152,4 +152,4 @@ So, for this specific case it might be enough to disable */server-status* or com
 to the architecture of Tor solution, **all the applications in darknet** have to be reviewed to make sure there is no excessive trust to "local attacker", and 
 it sounds like the fight "Security vs. Privacy" continues.
 
-{% img center /images/6_smart_home.png 900 'image' 'images' %}
+{% img center /images/6_tor_project.png 900 'image' 'images' %}
