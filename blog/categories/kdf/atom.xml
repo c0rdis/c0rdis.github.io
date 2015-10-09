@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kdf | 0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/blog/categories/kdf/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-09-16T19:25:25+02:00</updated>
+  <updated>2015-10-09T13:03:45+03:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Easy Way to Get KDF (Krypto-Dog Food)]]></title>
     <link href="http://antukh.com/blog/2015/01/26/krypto-dog-food/"/>
-    <updated>2015-01-26T20:57:42+01:00</updated>
+    <updated>2015-01-26T21:57:42+02:00</updated>
     <id>http://antukh.com/blog/2015/01/26/krypto-dog-food</id>
     <content type="html"><![CDATA[<p>My recent <a href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
 

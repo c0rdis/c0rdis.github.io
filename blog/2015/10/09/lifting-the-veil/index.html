@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Lifting the Veil, or Dark Does NOT Always Mean Secure - 0xAA - Random notes on security</title>
+  <meta name="author" content="Authorized Attacker">
+
+  
+  <meta name="description" content="This post can be treated as a continuation of previously published article of &ldquo;Deanonymization made simple&rdquo;. As mentioned, more than five &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://antukh.com/blog/2015/10/09/lifting-the-veil/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="0xAA - Random notes on security" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">0xAA - Random notes on security</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="Subscribe via RSS">RSS</a></li>
+  
+    <li><a href="mailto:alexander@antukh.com" rel="subscribe-email" title="Contact me">Email</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="antukh.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/cv.pdf">CV</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="https://aan.sh/pocorgtfo/">PoC||GTFO</a></li>
+  <li><a href="https://aan.sh/otn">OneTimeNotes</a></li>
+  <li><a href="https://aan.sh/angel">Personal CyberAngel</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Lifting the Veil, or Dark Does NOT Always Mean Secure</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-09T18:02:10+03:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:02 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post can be treated as a continuation of previously published article of &ldquo;Deanonymization made simple&rdquo;. As mentioned, more than five hundred
+of publicly gathered hidden services were misconfigured to disclose <em>/server-status</em> page. I&rsquo;ve analyzed all of them, and the results looked quite
+interesting to me to publish those.</p>
+
+<p><em>I would like to thank my friends <a href="https://twitter.com/josephfcox">@josephfcox</a> and <a href="https://twitter.com/flexlibris">@flexlibris</a> for providing me with invites
+to Riseup and making this article possible.</em></p>
+
+<!--more-->
+
+
+<p>In my previous post the main target of such attacks were hidden services themselves, or servers. It sounds obvious that clients are under attack and
+can potentially be disclosed, too. However, this is not exactly the case. Whereas all GET-requests are stored and available to any unauthenticated
+attacker, it is often hard to find a correlation between the user and his actions. Accessing a service under Tor will log a record with 127.0.0.1 as
+visitor&rsquo;s IP address - and even if there were external IP-addresses, they would be just exit nodes.
+For example, on the following screenshot one can see current requests to a variant of &ldquo;Dark Google&rdquo;:</p>
+
+<p><img class="center" src="/images/6_dark_google.png" width="900" title="image" alt="images"></p>
+
+<p>This information can be rather used for statistics than for actual de-anonymization. I don&rsquo;t feel to
+publish it here but my observations show that probably there is a reason why such Tor services are called &ldquo;dark&rdquo;.</p>
+
+<p>The following scenario is more of help though, since knowing the &ldquo;key&rdquo; parameter value serves as auth method and
+lets anybody knowing it see the confirmation of the order - along with the cost, BTC addresses of both parties,
+purchased product and customer details. Data from log:</p>
+
+<p><img class="center" src="/images/6_log_client.png" width="900" title="image" alt="images"></p>
+
+<p>Actual order along with client data:</p>
+
+<p><img class="center" src="/images/6_client_info.png" width="900" title="image" alt="images"></p>
+
+<p>Although &ldquo;pure&rdquo; hidden service can rarely be used for successful DA with this method (probably if not taking in consideration stupid authorization mistakes and
+poor authentication schemes), it becomes trivial in case of ordinary non-Tor services are in place. Moreover, in the next examples presence of a hidden
+service actually decreases overall security!</p>
+
+<h3>Riseup</h3>
+
+<p><em>Your riseup.net email account is a wonderful thing. Although we don&rsquo;t provide as much storage quota as surveillance-funded corporate email providers, riseup.net
+email has many unusual features: &lt;&hellip;> we do not log internet addresses of anyone using riseup.net services, including email.</em> *</p>
+
+<p><i><p align="right"><em>* welcome email for newcomers</em></p></i></p>
+
+<p>Riseup has three types of accounts sorted by security level: green (lists, wiki), red (email, shell, OpenVPN) and black (Bitmask enhanced security).
+In this section I will concentrate on red and black accounts, since green ones do not seem to have that much importance in terms of privacy.</p>
+
+<p>Brief information:
+incorrect configuration of nearly all of HTTP(S) services (listed
+here: <a href="https://help.riseup.net/security/network-security/tor/hs-addresses-signed.txt">https://help.riseup.net/security/network-security/tor/hs-addresses-signed.txt</a>)
+allows an attacker to disclose IP addresses of currently active users,
+their contacts from address book, login name at the moment, and in case of black.* service - to
+find a correlation between unique hashed ID of the user and his real
+login, to further spy on his activities. According to the earliest
+references I was able to find, this vulnerability was in place at
+least from 2012, which presents critical privacy risk to all Riseup
+users. Since it is quite trivial to set up monitoring of all the
+requests made to the systems, probably many of the users were already
+successfully de-anonymized during those 3+ years.</p>
+
+<h4>Vulnerable services in &ldquo;darknet&rdquo;:</h4>
+
+<ul>
+<li><a href="http://nzh3fv6jc6jskki3.onion/server-status">http://nzh3fv6jc6jskki3.onion/server-status</a> - help.*, lyre.*, riseup.net</li>
+<li><a href="http://cwoiopiifrlzcuos.onion/server-status">http://cwoiopiifrlzcuos.onion/server-status</a> - black.*, api.black.*</li>
+<li><a href="http://zsolxunfmbfuq7wf.onion/server-status">http://zsolxunfmbfuq7wf.onion/server-status</a> - cotinga.*, mail.*</li>
+<li><a href="http://yfm6sdhnfbulplsw.onion/server-status">http://yfm6sdhnfbulplsw.onion/server-status</a> - labs.*, bugs.otr.im</li>
+<li><a href="http://xpgylzydxykgdqyg.onion/server-status">http://xpgylzydxykgdqyg.onion/server-status</a> - lists.*, whimbrel.*</li>
+<li><a href="http://j6uhdvbhz74oefxf.onion/server-status">http://j6uhdvbhz74oefxf.onion/server-status</a> - user.*</li>
+<li><a href="http://7lvd7fa5yfbdqaii.onion/server-status">http://7lvd7fa5yfbdqaii.onion/server-status</a> - we.*</li>
+</ul>
+
+
+<h4>Sample data, which can be disclosed:</h4>
+
+<p><em>RED</em> : remote IP address of the current user, his actions and address book contacts</p>
+
+<p><img class="center" src="/images/6_real_ip_address_book.png" width="900" title="image" alt="images"></p>
+
+<p><em>RED</em> : currently logged in user, and his actions</p>
+
+<p><img class="center" src="/images/6_current_user_login.png" width="900" title="image" alt="images"></p>
+
+<p><em>BLACK</em> : correlation between real user login and his unique hash ID, which
+is used later to anonymize all the activities he makes</p>
+
+<p><img class="center" src="/images/6_login_hash_id.png" width="900" title="image" alt="images"></p>
+
+<h3>Megafon</h3>
+
+<p>As you might deduce, Megafon, one of the largest Russian mobile operators, is affected too. In this case,
+it was set of old subscription services along with WAP.</p>
+
+<p><img class="center" src="/images/6_megafon_general_info.png" width="900" title="image" alt="images"></p>
+
+<p>Brief information:
+it is possible for non-authenticated user to disclose list of all current connections (active users w/mobile phone numbers),
+internal pages of vulnerable services, information about current transactions and admin credentials for the services.</p>
+
+<h4>Vulnerable hosts on the same server:</h4>
+
+<ul>
+<li>wap.megafonpro.ru</li>
+<li>podpiskipro.ru</li>
+<li>iclickpro.ru</li>
+</ul>
+
+
+<h4>Sample data, which can be disclosed:</h4>
+
+<p>General user activity with phone numbers:</p>
+
+<p><img class="center" src="/images/6_megafon_user_activity.png" width="900" title="image" alt="images"></p>
+
+<p>Admin credentials to vulnerable services:</p>
+
+<p><img class="center" src="/images/6_megafon_admin_passwords.png" width="900" title="image" alt="images"></p>
+
+<p><em>Disclaimer: admin credentials were not used by me to break into the system, however, log analysis has shown
+that further attack on other Megafon systems is very likely from there.</em></p>
+
+<h3>Why is it happening?</h3>
+
+<p>The answer looks simple - because of default Apache configuration. For the sake of an experiment I&rsquo;ve setup a freshly installed
+Apache server to host both normal and hidden services. Here are the results for normal service:</p>
+
+<p><img class="center" src="/images/6_normal_service.png" width="900" title="image" alt="images"></p>
+
+<p>And here are those for hidden one:</p>
+
+<p><img class="center" src="/images/6_hidden_service.png" width="900" title="image" alt="images"></p>
+
+<p>The reason is that for Apache any connection from Tor browser is considered to be initiated from localhost (we&rsquo;ve seen that on all
+previous faulty screenshots, remember?). Default configuration of <em>status.conf</em> is as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;Location /server-status&gt;
+</span><span class='line'>    SetHandler server-status
+</span><span class='line'>    Order deny,allow
+</span><span class='line'>    Deny from all
+</span><span class='line'>    Allow from 127.0.0.1 ::1
+</span><span class='line'>#    Allow from 192.0.2.0/24
+</span><span class='line'>&lt;/Location&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In other words, since connection seems to come from a trustworthy source, it simply allows anyone to access it!
+Moreover, any user navigating on Tor seems to be more trusted than in non-Tor conditions, as both server and many applications just trust 127.0.0.1 more as local.
+<a href="http://blog.ircmaxell.com/2012/11/anatomy-of-attack-how-i-hacked.html">How I hacked StackOverflow</a>, indeed.</p>
+
+<p>So, for this specific case it might be enough to disable <em>/server-status</em> or comment the line &ldquo;Allow from 127.0.0.1 ::1&rdquo;. However, the problem is deeper - due
+to the architecture of Tor solution, <strong>all the applications in darknet</strong> have to be reviewed to make sure there is no excessive trust to &ldquo;local attacker&rdquo;, and
+it sounds like the fight &ldquo;Security vs. Privacy&rdquo; continues.</p>
+
+<p><img class="center" src="/images/6_smart_home.png" width="900" title="image" alt="images"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Authorized Attacker</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-10-09T18:02:10+03:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:02 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://antukh.com/blog/2015/10/09/lifting-the-veil/" data-via="c0rdis" data-counturl="http://antukh.com/blog/2015/10/09/lifting-the-veil/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/22/dark-appsec/" title="Previous Post: Deanonymization made simple">&laquo; Deanonymization made simple</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img class="center" src="/images/avatar.jpeg" width=200 title="image" alt="images">
+  <p>Alexander is a passionate Security Expert for over 6 years (formally), always looking towards original challenges and opportunities to learn something new.
+    He is a founder of <a href="http://defcon-moscow.org">Defcon Moscow</a> group and current leader of <a href="https://www.owasp.org/index.php/Russia">OWASP Russia</a> Local Chapter. 
+    His special interest is in the field of applied cryptography and in what is called &#8220;ethical hacking&#8221;.
+    <br>
+    <br>
+    Consider following me:
+    <a href="https://twitter.com/c0rdis" rel="me"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/antukh" rel="me"><i class="fa fa-linkedin-square"></i></a>
+    <a href="https://keybase.io/my" rel="me"><i class="fa fa-key"></i></a></p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/09/lifting-the-veil/">Lifting the Veil, or Dark Does NOT Always Mean Secure</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/22/dark-appsec/">Deanonymization Made Simple</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/23/angel/">Personal CyberAngel</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/05/otnotes/">One-time Notes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/krypto-dog-food/">Easy Way to Get KDF (Krypto-Dog Food)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Authorized Attacker -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

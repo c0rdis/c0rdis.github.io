@@ -4,7 +4,7 @@
   <title><![CDATA[0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-09-16T19:25:25+02:00</updated>
+  <updated>2015-10-09T13:03:45+03:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Lifting the Veil, or Dark Does NOT Always Mean Secure]]></title>
-    <link href="http://antukh.com/blog/2015/09/10/lifting-the-veil/"/>
-    <updated>2015-09-10T17:02:10+02:00</updated>
-    <id>http://antukh.com/blog/2015/09/10/lifting-the-veil</id>
+    <link href="http://antukh.com/blog/2015/10/09/lifting-the-veil/"/>
+    <updated>2015-10-09T18:02:10+03:00</updated>
+    <id>http://antukh.com/blog/2015/10/09/lifting-the-veil</id>
     <content type="html"><![CDATA[<p>This post can be treated as a continuation of previously published article of &ldquo;Deanonymization made simple&rdquo;. As mentioned, more than five hundred
 of publicly gathered hidden services were misconfigured to disclose <em>/server-status</em> page. I&rsquo;ve analyzed all of them, and the results looked quite
 interesting to me to publish those.</p>
@@ -28,7 +28,128 @@ to Riseup and making this article possible.</em></p>
 <!--more-->
 
 
-<p>Sorry, this material cannot be published unencrypted yet, as it breaks the agreement of responsible disclosure. Please check back soon.</p>
+<p>In my previous post the main target of such attacks were hidden services themselves, or servers. It sounds obvious that clients are under attack and
+can potentially be disclosed, too. However, this is not exactly the case. Whereas all GET-requests are stored and available to any unauthenticated
+attacker, it is often hard to find a correlation between the user and his actions. Accessing a service under Tor will log a record with 127.0.0.1 as
+visitor&rsquo;s IP address - and even if there were external IP-addresses, they would be just exit nodes.
+For example, on the following screenshot one can see current requests to a variant of &ldquo;Dark Google&rdquo;:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_dark_google.png" width="900" title="image" alt="images"></p>
+
+<p>This information can be rather used for statistics than for actual de-anonymization. I don&rsquo;t feel to
+publish it here but my observations show that probably there is a reason why such Tor services are called &ldquo;dark&rdquo;.</p>
+
+<p>The following scenario is more of help though, since knowing the &ldquo;key&rdquo; parameter value serves as auth method and
+lets anybody knowing it see the confirmation of the order - along with the cost, BTC addresses of both parties,
+purchased product and customer details. Data from log:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_log_client.png" width="900" title="image" alt="images"></p>
+
+<p>Actual order along with client data:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_client_info.png" width="900" title="image" alt="images"></p>
+
+<p>Although &ldquo;pure&rdquo; hidden service can rarely be used for successful DA with this method (probably if not taking in consideration stupid authorization mistakes and
+poor authentication schemes), it becomes trivial in case of ordinary non-Tor services are in place. Moreover, in the next examples presence of a hidden
+service actually decreases overall security!</p>
+
+<h3>Riseup</h3>
+
+<p><em>Your riseup.net email account is a wonderful thing. Although we don&rsquo;t provide as much storage quota as surveillance-funded corporate email providers, riseup.net
+email has many unusual features: &lt;&hellip;> we do not log internet addresses of anyone using riseup.net services, including email.</em> *</p>
+
+<p><i><p align="right"><em>* welcome email for newcomers</em></p></i></p>
+
+<p>Riseup has three types of accounts sorted by security level: green (lists, wiki), red (email, shell, OpenVPN) and black (Bitmask enhanced security).
+In this section I will concentrate on red and black accounts, since green ones do not seem to have that much importance in terms of privacy.</p>
+
+<p>Brief information:
+incorrect configuration of nearly all of HTTP(S) services (listed
+here: <a href="https://help.riseup.net/security/network-security/tor/hs-addresses-signed.txt">https://help.riseup.net/security/network-security/tor/hs-addresses-signed.txt</a>)
+allows an attacker to disclose IP addresses of currently active users,
+their contacts from address book, login name at the moment, and in case of black.* service - to
+find a correlation between unique hashed ID of the user and his real
+login, to further spy on his activities. According to the earliest
+references I was able to find, this vulnerability was in place at
+least from 2012, which presents critical privacy risk to all Riseup
+users. Since it is quite trivial to set up monitoring of all the
+requests made to the systems, probably many of the users were already
+successfully de-anonymized during those 3+ years.</p>
+
+<h4>Vulnerable services in &ldquo;darknet&rdquo;:</h4>
+
+<ul>
+<li><a href="http://nzh3fv6jc6jskki3.onion/server-status">http://nzh3fv6jc6jskki3.onion/server-status</a> - help.*, lyre.*, riseup.net</li>
+<li><a href="http://cwoiopiifrlzcuos.onion/server-status">http://cwoiopiifrlzcuos.onion/server-status</a> - black.*, api.black.*</li>
+<li><a href="http://zsolxunfmbfuq7wf.onion/server-status">http://zsolxunfmbfuq7wf.onion/server-status</a> - cotinga.*, mail.*</li>
+<li><a href="http://yfm6sdhnfbulplsw.onion/server-status">http://yfm6sdhnfbulplsw.onion/server-status</a> - labs.*, bugs.otr.im</li>
+<li><a href="http://xpgylzydxykgdqyg.onion/server-status">http://xpgylzydxykgdqyg.onion/server-status</a> - lists.*, whimbrel.*</li>
+<li><a href="http://j6uhdvbhz74oefxf.onion/server-status">http://j6uhdvbhz74oefxf.onion/server-status</a> - user.*</li>
+<li><a href="http://7lvd7fa5yfbdqaii.onion/server-status">http://7lvd7fa5yfbdqaii.onion/server-status</a> - we.*</li>
+</ul>
+
+
+<h4>Sample data, which can be disclosed:</h4>
+
+<p><em>RED</em> : remote IP address of the current user, his actions and address book contacts</p>
+
+<p><img class="center" src="http://antukh.com/images/6_real_ip_address_book.png" width="900" title="image" alt="images"></p>
+
+<p><em>RED</em> : currently logged in user, and his actions</p>
+
+<p><img class="center" src="http://antukh.com/images/6_current_user_login.png" width="900" title="image" alt="images"></p>
+
+<p><em>BLACK</em> : correlation between real user login and his unique hash ID, which
+is used later to anonymize all the activities he makes</p>
+
+<p><img class="center" src="http://antukh.com/images/6_login_hash_id.png" width="900" title="image" alt="images"></p>
+
+<h3>Megafon</h3>
+
+<p>As you might deduce, Megafon, one of the largest Russian mobile operators, is affected too. In this case,
+it was set of old subscription services along with WAP.</p>
+
+<p><img class="center" src="http://antukh.com/images/6_megafon_general_info.png" width="900" title="image" alt="images"></p>
+
+<p>Brief information:
+it is possible for non-authenticated user to disclose list of all current connections (active users w/mobile phone numbers),
+internal pages of vulnerable services, information about current transactions and admin credentials for the services.</p>
+
+<h4>Vulnerable hosts on the same server:</h4>
+
+<ul>
+<li>wap.megafonpro.ru</li>
+<li>podpiskipro.ru</li>
+<li>iclickpro.ru</li>
+</ul>
+
+
+<h4>Sample data, which can be disclosed:</h4>
+
+<p>General user activity with phone numbers:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_megafon_user_activity.png" width="900" title="image" alt="images"></p>
+
+<p>Admin credentials to vulnerable services:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_megafon_admin_passwords.png" width="900" title="image" alt="images"></p>
+
+<p><em>Disclaimer: admin credentials were not used by me to break into the system, however, log analysis has shown
+that further attack on other Megafon systems is very likely from there.</em></p>
+
+<h3>Why is it happening?</h3>
+
+<p>The answer looks simple - because of default Apache configuration. For the sake of an experiment I&rsquo;ve setup a freshly installed
+Apache server to host both normal and hidden services. Here are the results for normal service:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_normal_service.png" width="900" title="image" alt="images"></p>
+
+<p>And here are those for hidden one:</p>
+
+<p><img class="center" src="http://antukh.com/images/6_hidden_service.png" width="900" title="image" alt="images"></p>
+
+<p>The reason is that for Apache any connection from Tor browser is considered to be initiated from localhost (we&rsquo;ve seen that on all
+previous faulty screenshots, remember?). Default configuration of <em>status.conf</em> is as follows:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -37,215 +158,31 @@ to Riseup and making this article possible.</em></p>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>-----BEGIN PGP MESSAGE-----
-</span><span class='line'>Comment: GPGTools - https://gpgtools.org
-</span><span class='line'>
-</span><span class='line'>owFlmGsUBWtZ1885EOoAoQaZeDukS4sJZvbMnpk9iOme++y57LnfxIVz23sue657
-</span><span class='line'>9txSPBrHDgfDo52VUZFrhXgEVCwpIS8peEJgVZIpsBAUlxmRWWILwSjauFafet9v
-</span><span class='line'>z7fneZ//8/u/zxPPfcYDwIP/8mte/Ifv/TuPfOjBn3r+Q9EL0jrul3ZIk1eG/ZDH
-</span><span class='line'>l/SlwzzYn/6jd73kC4dieVF9WOO1hxXWNPc8++dRgG6qKq2Hlz3Ma7zVNJfrwy95
-</span><span class='line'>OBuG9voyCDq35+ELoZc2/RkAMl1U9lAbVwwPUxco3usQQXE7tnBppRJKXY5QcBUR
-</span><span class='line'>SpJ0oYfmJcsds91dzwRFn65B5wB8qoeiQlytPaNQSEliunHgvIVdhSthmdWIrSUj
-</span><span class='line'>m4WXBb07CuHYWfS65otK+1eB3mwzQPWEU5CgroyOR+1oLCnahGJGNaV+YQauT2IE
-</span><span class='line'>T6TaW3wNMiXsCiLqrdwGfXuu0lOClShws3DU29W0pIWrf5Mdy40LrMbLuJElTe52
-</span><span class='line'>GM+4MxLXujsOqRNl7k71EIfBQfsEXfSJBk7igprBeeL3tnkbro3rUwwCcWexyo6k
-</span><span class='line'>07lih25reTmQ9MmeYag4OtsiGK9Tgwem4EAeoMwTzmN6e3aRwRUro1R7Rud8UZIG
-</span><span class='line'>/WCyKd7BmHuEcNOyXdaYuAUlswLSg3tmHDGwDnC91Gw97q/nrAb7RMf662HuXHUP
-</span><span class='line'>yVfYFrYyqzBlq5o4uxu3e3YSnHXRHXLSuI2hII1pANMpMH0vHuigS7hKx2EnWLeE
-</span><span class='line'>wVp5mMNVYB/x63AYykL0l+pCErm1NWtxtfH2yGy5OucAj7yI6Q67Vn6U+9sCvRw7
-</span><span class='line'>WqUMSTjmVjkmNx4r2Rt6CIOGickk68gFRHxFXdkyiMl6iIHN5CcX3cckwRaR2G7v
-</span><span class='line'>xcIDCVclROchK2IgioVsAffwrA7ItYat6972sa0gkPjSF4QICKW642w9UcZTy0FM
-</span><span class='line'>ufK5yXsQS+iM7oRqY7MYMoMpHw+4eLXPnSG77Txcll2B3HaFbAL4xOfr7lLNjFTz
-</span><span class='line'>ip0HdL2PleOxy2wwSss86Vr/kpDNtKabEutKIg1wkLWQxqd0n+QMAArYzaqMkLsd
-</span><span class='line'>ila2pkLAY+28vfUuJ+khc9dUfGO5ja1yKrXC/lLzJ4dhQYU7Cg2sYBXAS7eSDwp1
-</span><span class='line'>obukCkNBi0amOq+Ktpu2U5FDHEoOS9Aq0WketR7sonzNBCHXHBzNDvVSAmZFn041
-</span><span class='line'>lW9H15gwtN5IsivgeHgh2lAkjoxY+jDIHJ0yWp1Gl72sIKWzdVM5az+tRHED1oqT
-</span><span class='line'>t9KeRQpxTpGilqoje4bE2L4gxElyxAuZQSdH63kDJY46Y6GURMFl5l0cq03gvQbQ
-</span><span class='line'>G7M9g972LCv7RbUrjBJbS9G0/RwzsQ3CJZ20MZyNtmD7Cmvd2iDIthFseDMa9pOy
-</span><span class='line'>A4hkvsFojKWpQTGXRVdpJQNrlidkqIvTObmkvAxhXHfAYzeYRIy4bjJqNGT5Lvhd
-</span><span class='line'>kyYAuxyhUV/PkpOfK5kUKFNy2s7LQPHmoOZVtDRRuM0RhrvH1Y732zJJKrNvWYII
-</span><span class='line'>runZ3ALhsfKEYDxsmEl1yROpdbVQCGjWIWADZy1m3Ph4oxq5s3LGqWfMUCbvLSqL
-</span><span class='line'>w3pkjdPGBij5PDAM0ZuXsLt38FwuKoYgedXHELan7hetj0ds1Iw59aMDrK/jqdts
-</span><span class='line'>K25LzSKSaCOQCNmpURW+WNVZ2/kNebZjNBoVOhlVqC9ru0nE/LaTR/C27I9HRNyK
-</span><span class='line'>7Bh1WLfJprHKCKASSJXFlPKA42YYBYM47k/kfLhSE8/dqk1ywgWvcCQdC32NyTFo
-</span><span class='line'>QveHrUKw0tUW4ix3AXlLbw3V7neHYi73aUGAkVGAeET2o1Awdny4tbJUmKN7KIT9
-</span><span class='line'>FOMESsB0wmtX/mgWalwDqh0ME10jgqZ5rhJBKAeT+dlueKrZXjvOsJSLiLIeT20h
-</span><span class='line'>pZVySh1tpsnyOamJTD3VIMAvI+Uss77POJ70OBFKnNbOuawSdtuzRq3HKbqTLa53
-</span><span class='line'>VOHsatE65qvRKwTJW1wmj/sAkJsMZ3Re6Av3lK0g3AhK6kw5MmVymY6omuXxnOBC
-</span><span class='line'>spx2q7MDUS1kWDhKhtNacNnOG4FGPFMIepKYrSUes8mCSNKKaVG/CRNPdKKNDEIz
-</span><span class='line'>kqrtKNaNd10ovbbXEJOSII/4andxgB0jaui66Ym7CIeBveBtlreHwTVrjg6pY29z
-</span><span class='line'>UU1rw95S8VFLdN7QsEOR0Ph6OoTo3r8AqnXo4JO08NzVliybMsUokoluF3JI1Nyf
-</span><span class='line'>Lje7pt5UWT97ScQXN5u4XGsYR5rM9ihu2QKlD+1cerC3hLnlTma6azPB3VdGbLUZ
-</span><span class='line'>PbDILNrZfPM93o9md5PqQtx6pAL3ckyGzg0zAC1ILjM3LLETDlXT4JTZtSq95wN1
-</span><span class='line'>WgZCIRMwWdUJcgpn7RD75DL9Nrvl5a7SLLhBOAfQhGPc7mZhrc3QlaNZMGJ8jMYp
-</span><span class='line'>aXhI52yhn5DaVe441axMd8Mm1jY5I93tgGZYooXFQHtWQ30XIvdRB59kc6ZRw9yY
-</span><span class='line'>/kbLJQsVLuntQh3IgUAMxhsK5nwQLe7oX3Aka8Q7qUsMUEgotPNDNxy0y6gfTTlj
-</span><span class='line'>zkY20vgWv5IuzaLsltuBNLdMil+IjSfF2qmW28a1YQfFugbQB9jeCNykalU8SHOg
-</span><span class='line'>h866BYkkqeFYSOBM3BltPTPgcXB3cJupersDSXGzw0GuE3ayB6wb2Vcs0K2u47Ct
-</span><span class='line'>hITIxeI8Zra6W1xd1Q6pYvQpl9Ak6HsJd4GGlGC6ZHu80Kl3MCsbqPQ4wruSqQ1d
-</span><span class='line'>2tLiJZUk6gZC072qviTtBnx7b2kuSghIV8xLjfSMeODHju2rGkqqmATsccCm0dqh
-</span><span class='line'>nmrXd/ZC2Ehbw9Fv4Ku13E4NfwDbLOygrQKpqMNpy6YEbyTS7phauq6ZChzH69zT
-</span><span class='line'>u4ZvW611JtlmtjcuUCZ3m/oKyDnUpOnHixDGRHUnSJ8V0/YCqYo8zHOCimEI1L7m
-</span><span class='line'>wthxjawAJ1pwZWseRW9IuWVnjCgCHJPm3sMGv/ZJyqMCQSZKOrvVjKf39R4jfIB2
-</span><span class='line'>8m3Mt7lUbXnx0qZIt2TkMhhnrr2JF4va0ReecTpxSy9sIUeL4kfMVkQ8B2tA2JQU
-</span><span class='line'>wC+W9JLSNOPV11ZR0lOFurF3WEh5zAxx0gbd37VpeqMYvgeZw1xAHK/QJcpJqDOx
-</span><span class='line'>NQb4QT+L8IbaWnQbUmirpQh577DKdxdTtvaaUaLWYMyg1W90/XgOnIXzQC073K4+
-</span><span class='line'>x4dZCRx76DTesdUjt2xFKmu8WqOcGpkXHZod7MCDduaQ4XxAiFRm/DIzVSs2m40b
-</span><span class='line'>MXWmrPoBSDbnDRF3yphqg2H0iSWz5uXgeAJmOw6rCIKI0ptzCWU8ZPqwBg02avpi
-</span><span class='line'>zEO+IkMjSwKBiJ+oyCG4+GwM59AKr/LaQekep1GTPxfBjJDGCkK1Uck349Y5Rat1
-</span><span class='line'>S+rRyWGF6U2AATcC3EPqBopby/VJHj2V5soOau/76H4JYjoLeQgrli3YggU0QEth
-</span><span class='line'>E2CBLlfnaA6loqfA0q9kRQwXyKCneoNY7AVphmEtBdK9NucZJLG9z9tmopAUNHIZ
-</span><span class='line'>70lp2Hm8Mgb2gFkXHbjlt7wi8GahZImvIwPLFDdOIsFKyYk+4OQVj+UAZbM9SfkC
-</span><span class='line'>Q66n7F5n90Z3bb+oXiEBWJVPl+bYoMHks75EUctmq2pePu43O6kbZ30d4IuS9N4W
-</span><span class='line'>qSM8vEGz1DDW+VZnzoG39huACwzSJMiRXOx8iNLTAZeh+AgrcrGPlhszEtqOIMCS
-</span><span class='line'>cgR66BZWcsXg0K8tmaCbmLyhE5B4GqyQcj3VUkZudhkFYvi+5kYOWkAslILmQGaq
-</span><span class='line'>EYhBdB8bW00yctOxSvu07n05mCYRWGuKLgQmKuO59QrVQp3mijCKNW+oSe93rrAp
-</span><span class='line'>trLYN91w3OE1gXee107emZ17SRZH4QxsjOU6lsV1MLVrcrS7syIJ0oXfuWy8ZHCS
-</span><span class='line'>n8NF7aNo8IM8PB0w1tv7TnUZmQC3Gtu7QQDJ9a23V8dLTbvcCeu6SOVxpyA26fmu
-</span><span class='line'>8HbA0FmNYsPC+TUejtDuPJ+25KEeOCgyC9PYA/UE8Ud4Qs0cxjxuFTTCuYsBk3Xk
-</span><span class='line'>Wqhq2OsORhnqiGvxOjkOczwMdnLXbnMnDhTOLQGEEX7mRGEKY2i7lpO/3qt+T2+H
-</span><span class='line'>gSfEorVURxNdn6Z1xt351IPGXriI/rSbZf6QjuWUAtxIrGAvXqVRPVF7CGsjoue2
-</span><span class='line'>rX5tM03ibDgZPIy90Q2Uz/DGPY1Oy+lBD68hDzLK4ObAnvEaaTPdItK/eyIkzFgP
-</span><span class='line'>OyyHznXuZB28HBtrQy1qRWMOvWNxxV2ph4g5ElfHtgoGJQGiQ2P+rM7bie4RKmQp
-</span><span class='line'>SbibJU02DcofIgkSkfto5aDkdvDvHoa8RKEFxem4btfZUuIIA/KjLtbuxe+wUrbF
-</span><span class='line'>087kS87qQEQ+WAVL+KmwF/Aq2xyX3L2Tvdvt4kHTXGEGE90qhz0KbKoTFKvu4G8h
-</span><span class='line'>QZE35wyS7R5jedrTWMioT5u2q7uClTU18tnGoRMaDjeSFN1mz9zLEQscVbU7SfYI
-</span><span class='line'>iaPdixO4OakBCgdFn0XgujNvhdCP3UlLg0X2z8RcqpfcmxAxGBYz2utVC4DUqb//
-</span><span class='line'>510QljyYIUDPiwwiHSBjnj1BCqWNo6TDuNOPHmFqQ26QsVtrYG3Nd5/h7fQcULND
-</span><span class='line'>2qhS6R1XGB08ttOO94RuAYYwcnJR9bMs0nuMnwykZq3iIg7hwtN7MiAwpxx0bg+k
-</span><span class='line'>ZXNcAz5fSGmCddYKExv0CCwltCODWAMsgy1c4YzLCIyen2cXj7SxD5ZWSG+7uPEF
-</span><span class='line'>AOuXOMCuqeZhJ2WVK0yNyYw1lbFMqzo8b2b6rJaCYW3vLoDPwvFknV0yjQ78Bi4r
-</span><span class='line'>mQ2BTCOdMOAQ9iaPpnXUFnyLQNdYuLb8IPQCZ+VHmdj5Rh9kibkIKO/DrH6w9hy9
-</span><span class='line'>xqFyAoH9galJVIQqKap8bWHxfaqVcerCeX+NDfOcXHb5IVEwfnuwKMhmCEOFVlBE
-</span><span class='line'>cgrpkYymgdCVMF9o8SHiIg2eBWWXkuT1yjM5I7v7bX90D1pHqMW6nS4q16tLmnPQ
-</span><span class='line'>dDgumrthMTYHNFLoepkf7I4w4Y4vdDc+cXm/QbQu0kmHMoIxCgituBhVdxvT+2jc
-</span><span class='line'>lxsEcZyQv+x2oAfsb0RrcwMytLRULaM+xjp+ivSIoW+GORyxZRalSo2NBKMlHu25
-</span><span class='line'>eB5SM2fW090mpOrmBuxHGM+PYC+0XOedNZjEE1+nUaGgvHBbDGfRUuSuckDzPGxC
-</span><span class='line'>uKGthrLzWXGw4ESHh3AGOE10UCJu5jT3lka8YaTRkueSRaFhjK/7Ec3qQPHccneX
-</span><span class='line'>BMPJljuCVc567XwnLIHpBTCdHPuyd2qYsmnFDyN1Z/vM3ukDIYX4vCEiyrT63d0S
-</span><span class='line'>kk23S7cJVdGuWp0Ljr0bvnivA1Ri8rXgHuZyQtfS2g9ZAA/n+NRWh9Owicd9pDak
-</span><span class='line'>7uGs49vSDRT5Y2kB36KDPAP8+dqOVZn/f5X3moe++pkPPAg88Ky/8NAXtn4PAF/y
-</span><span class='line'>pf9vQfjdxfM+n33o98NW+C9f/fgb+Vc89er3fcP/pj76/K/4lfc8KbxF+sb/dn3d
-</span><span class='line'>K50POM88/9zHHlp//Xn/9PM/8Vvf+IyPvPgN2FdE9Y/91Q+/639dX/WZn/n5dx4/
-</span><span class='line'>ZT73Nz4ovPuBN+nRL35P/sjrsr/5gm/+rtt73/Ty6h3v/9XjPzT/9C3/6Af/9oef
-</span><span class='line'>fOSFb/xl8Km3f/D1H/js5bl/+bOv+enf/gH/X3M/5lOfefhn8fnNT3ePlU98+yc+
-</span><span class='line'>/vIH1//xTa9/6iW//fu/8HX4jwhfpb7a+7YXfu5JIPyy97+Bfu7H/+0nYfCx176V
-</span><span class='line'>/K8f/09/Zv4VsX4W/g1f+Zec05tZ1XnOd5n/8R1//LHXfvA3X/3UY3/8Ze/4Iu3t
-</span><span class='line'>z/u1zz/677//Rc/+9m8qk/e8+Omz/Ls/+OV/+o+/k37R8//PS68voH8yeeeHvP/w
-</span><span class='line'>Qz/3Kf7rnv1WzfnEJx/78a994e8+8SsffY5Q/9nv/c/3KW/71j96mUn9wf6fPPk2
-</span><span class='line'>4lHiIf133veGX3xw8xZp73/mHzxG/LvxR//kRZ9+9gdf+OS7v+o93/qbn3rFL/13
-</span><span class='line'>9Ss/9eU//UnqlfCjP1p+5LO/zr42euJLtUcvj8DvNb/mA+//1Zf+3U+r34F94J99
-</span><span class='line'>/ff954/9zrs3b/xa8a3//Huf/vDj7/vlV9x+/hd+6yng+571S+wj31urH3n078lP
-</span><span class='line'>m3/rE89//HFxn773NS//4p/8+w/+yDO/3/zxv/b033j8bc/52Wf/q1f91G/89df9
-</span><span class='line'>zJvmt3/u157+6CR+d/NU9SWh+okvftH6B9Azvv4n3vnhzwGvev23QK/4jvVPijd/
-</span><span class='line'>5Pe6v/iuH/gXT3zRd/7hv7G/eYxe98Pw97z8XLzp/wI=
-</span><span class='line'>=KBEd
-</span><span class='line'>-----END PGP MESSAGE-----</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;Location /server-status&gt;
+</span><span class='line'>    SetHandler server-status
+</span><span class='line'>    Order deny,allow
+</span><span class='line'>    Deny from all
+</span><span class='line'>    Allow from 127.0.0.1 ::1
+</span><span class='line'>#    Allow from 192.0.2.0/24
+</span><span class='line'>&lt;/Location&gt;</span></code></pre></td></tr></table></div></figure>
 
+
+<p>In other words, since connection seems to come from a trustworthy source, it simply allows anyone to access it!
+Moreover, any user navigating on Tor seems to be more trusted than in non-Tor conditions, as both server and many applications just trust 127.0.0.1 more as local.
+<a href="http://blog.ircmaxell.com/2012/11/anatomy-of-attack-how-i-hacked.html">How I hacked StackOverflow</a>, indeed.</p>
+
+<p>So, for this specific case it might be enough to disable <em>/server-status</em> or comment the line &ldquo;Allow from 127.0.0.1 ::1&rdquo;. However, the problem is deeper - due
+to the architecture of Tor solution, <strong>all the applications in darknet</strong> have to be reviewed to make sure there is no excessive trust to &ldquo;local attacker&rdquo;, and
+it sounds like the fight &ldquo;Security vs. Privacy&rdquo; continues.</p>
+
+<p><img class="center" src="http://antukh.com/images/6_smart_home.png" width="900" title="image" alt="images"></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Deanonymization Made Simple]]></title>
     <link href="http://antukh.com/blog/2015/08/22/dark-appsec/"/>
-    <updated>2015-08-22T21:44:25+02:00</updated>
+    <updated>2015-08-22T22:44:25+03:00</updated>
     <id>http://antukh.com/blog/2015/08/22/dark-appsec</id>
     <content type="html"><![CDATA[<p><a href="https://twitter.com/c0rdis/status/630705659848302592">cbcf9dde327c475d99627c87f58cab7ac6689164bf2fe7734c10c78005ed118e</a> == sha256(&ldquo;[10.08.2015] I&rsquo;ve discovered that about 2% of the known darkweb is controlled by one organization.&rdquo;)</p>
 
@@ -345,7 +282,7 @@ To summarize, at least the following easy ways may let researcher deanonymize a 
   <entry>
     <title type="html"><![CDATA[Personal CyberAngel]]></title>
     <link href="http://antukh.com/blog/2015/02/23/angel/"/>
-    <updated>2015-02-23T20:19:26+01:00</updated>
+    <updated>2015-02-23T21:19:26+02:00</updated>
     <id>http://antukh.com/blog/2015/02/23/angel</id>
     <content type="html"><![CDATA[<p>We all know how frustrating account theft could be. Just imagine - you read the news about <a href="http://gadgets.ndtv.com/internet/news/nearly-7-million-dropbox-account-passwords-reportedly-leaked-606494">yesterday&rsquo;s successful attack</a>
 on some service with full database dump published on Pastebin, and you suddenly notice
@@ -370,7 +307,7 @@ address too, or make any suggestions, just let me know privately. Stay safe!</p>
   <entry>
     <title type="html"><![CDATA[One-time Notes]]></title>
     <link href="http://antukh.com/blog/2015/02/05/otnotes/"/>
-    <updated>2015-02-05T08:30:07+01:00</updated>
+    <updated>2015-02-05T09:30:07+02:00</updated>
     <id>http://antukh.com/blog/2015/02/05/otnotes</id>
     <content type="html"><![CDATA[<p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
 
@@ -394,7 +331,7 @@ address too, or make any suggestions, just let me know privately. Stay safe!</p>
   <entry>
     <title type="html"><![CDATA[Easy Way to Get KDF (Krypto-Dog Food)]]></title>
     <link href="http://antukh.com/blog/2015/01/26/krypto-dog-food/"/>
-    <updated>2015-01-26T20:57:42+01:00</updated>
+    <updated>2015-01-26T21:57:42+02:00</updated>
     <id>http://antukh.com/blog/2015/01/26/krypto-dog-food</id>
     <content type="html"><![CDATA[<p>My recent <a href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/">Keybase overview</a> gave me an impulse to read more about KDFs, their implementations and modern applications, which I&rsquo;m going to present in the following post.</p>
 
@@ -668,7 +605,7 @@ In context of keys used to secure the sessions, it might be possible for an atta
   <entry>
     <title type="html"><![CDATA[Anti-debugging Techniques Cheat Sheet]]></title>
     <link href="http://antukh.com/blog/2015/01/19/malware-techniques-cheat-sheet/"/>
-    <updated>2015-01-19T18:23:45+01:00</updated>
+    <updated>2015-01-19T19:23:45+02:00</updated>
     <id>http://antukh.com/blog/2015/01/19/malware-techniques-cheat-sheet</id>
     <content type="html"><![CDATA[<p>It&rsquo;s been quite a while I analyzed malware last time, so I decided to refresh my knowledge and write a short post on common x86 malware anti-debugging techniques.
 Techniques here do not include obfuscation like false branches, spaghetti code etc., and present an extract of popular ways to kick debugger&rsquo;s ass.
@@ -773,7 +710,7 @@ Feel free to contact me to complete the list with undescribed technique and/or c
   <entry>
     <title type="html"><![CDATA[&quot;Cryptosocial Network&quot; From the Inside]]></title>
     <link href="http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside/"/>
-    <updated>2015-01-17T21:45:57+01:00</updated>
+    <updated>2015-01-17T22:45:57+02:00</updated>
     <id>http://antukh.com/blog/2015/01/17/cryptosocial-network-from-the-inside</id>
     <content type="html"><![CDATA[<p><em>Disclaimer: all vulnerabilities described here were reported to developers and published with their consent</em></p>
 
