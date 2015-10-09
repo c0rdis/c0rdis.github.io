@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lifting the veil, or dark does NOT always mean secure"
-date: 2015-09-10 17:02:10 +0200
+date: 2015-10-09 17:02:10 +0200
 comments: true
 categories: 
 ---
@@ -14,111 +14,142 @@ to Riseup and making this article possible.*
 
 <!--more-->
 
-Sorry, this material cannot be published unencrypted yet, as it breaks the agreement of responsible disclosure. Please check back soon.
+In my previous post the main target of such attacks were hidden services themselves, or servers. It sounds obvious that clients are under attack and
+can potentially be disclosed, too. However, this is not exactly the case. Whereas all GET-requests are stored and available to any unauthenticated
+attacker, it is often hard to find a correlation between the user and his actions. Accessing a service under Tor will log a record with 127.0.0.1 as
+visitor's IP address - and even if there were external IP-addresses, they would be just exit nodes.
+For example, on the following screenshot one can see current requests to a variant of "Dark Google": 
+
+{% img center /images/6_dark_google.png 900 'image' 'images' %}
+
+This information can be rather used for statistics than for actual de-anonymization. I don't feel to 
+publish it here but my observations show that probably there is a reason why such Tor services are called "dark". 
+
+The following scenario is more of help though, since knowing the "key" parameter value serves as auth method and 
+lets anybody knowing it see the confirmation of the order - along with the cost, BTC addresses of both parties, 
+purchased product and customer details. Data from log:
+
+{% img center /images/6_log_client.png 900 'image' 'images' %}
+
+Actual order along with client data:
+
+{% img center /images/6_client_info.png 900 'image' 'images' %}
+
+Although "pure" hidden service can rarely be used for successful DA with this method (probably if not taking in consideration stupid authorization mistakes and
+poor authentication schemes), it becomes trivial in case of ordinary non-Tor services are in place. Moreover, in the next examples presence of a hidden 
+service actually decreases overall security!
+ 
+
+### Riseup
+*Your riseup.net email account is a wonderful thing. Although we don't provide as much storage quota as surveillance-funded corporate email providers, riseup.net
+email has many unusual features: <...> we do not log internet addresses of anyone using riseup.net services, including email.* *
+
+<i><p align="right">** welcome email for newcomers*</p></i>
+
+Riseup has three types of accounts sorted by security level: green (lists, wiki), red (email, shell, OpenVPN) and black (Bitmask enhanced security).
+In this section I will concentrate on red and black accounts, since green ones do not seem to have that much importance in terms of privacy. 
+
+
+Brief information:
+incorrect configuration of nearly all of HTTP(S) services (listed
+here: https://help.riseup.net/security/network-security/tor/hs-addresses-signed.txt)
+allows an attacker to disclose IP addresses of currently active users,
+their contacts from address book, login name at the moment, and in case of black.* service - to
+find a correlation between unique hashed ID of the user and his real
+login, to further spy on his activities. According to the earliest
+references I was able to find, this vulnerability was in place at
+least from 2012, which presents critical privacy risk to all Riseup
+users. Since it is quite trivial to set up monitoring of all the
+requests made to the systems, probably many of the users were already
+successfully de-anonymized during those 3+ years.
+
+
+
+#### Vulnerable services in "darknet":
+
+* http://nzh3fv6jc6jskki3.onion/server-status - help.\*, lyre.*, riseup.net
+* http://cwoiopiifrlzcuos.onion/server-status - black.\*, api.black.\*
+* http://zsolxunfmbfuq7wf.onion/server-status - cotinga.\*, mail.\*
+* http://yfm6sdhnfbulplsw.onion/server-status - labs.\*, bugs.otr.im
+* http://xpgylzydxykgdqyg.onion/server-status - lists.\*, whimbrel.\*
+* http://j6uhdvbhz74oefxf.onion/server-status - user.\*
+* http://7lvd7fa5yfbdqaii.onion/server-status - we.\*
+
+
+#### Sample data, which can be disclosed:
+*RED* : remote IP address of the current user, his actions and address book contacts
+
+{% img center /images/6_real_ip_address_book.png 900 'image' 'images' %}
+
+*RED* : currently logged in user, and his actions
+
+{% img center /images/6_current_user_login.png 900 'image' 'images' %}
+
+*BLACK* : correlation between real user login and his unique hash ID, which
+is used later to anonymize all the activities he makes
+
+{% img center /images/6_login_hash_id.png 900 'image' 'images' %}
+
+
+
+### Megafon
+As you might deduce, Megafon, one of the largest Russian mobile operators, is affected too. In this case,
+it was set of old subscription services along with WAP.
+
+{% img center /images/6_megafon_general_info.png 900 'image' 'images' %}
+
+Brief information:
+it is possible for non-authenticated user to disclose list of all current connections (active users w/mobile phone numbers),
+internal pages of vulnerable services, information about current transactions and admin credentials for the services.
+
+#### Vulnerable hosts on the same server:
+
+* wap.megafonpro.ru
+* podpiskipro.ru
+* iclickpro.ru
+
+
+#### Sample data, which can be disclosed:
+General user activity with phone numbers:
+
+{% img center /images/6_megafon_user_activity.png 900 'image' 'images' %}
+
+Admin credentials to vulnerable services:
+
+{% img center /images/6_megafon_admin_passwords.png 900 'image' 'images' %}
+
+*Disclaimer: admin credentials were not used by me to break into the system, however, log analysis has shown
+that further attack on other Megafon systems is very likely from there.*
+
+### Why is it happening?
+The answer looks simple - because of default Apache configuration. For the sake of an experiment I've setup a freshly installed
+Apache server to host both normal and hidden services. Here are the results for normal service:
+
+{% img center /images/6_normal_service.png 900 'image' 'images' %}
+
+And here are those for hidden one:
+
+{% img center /images/6_hidden_service.png 900 'image' 'images' %}
+
+The reason is that for Apache any connection from Tor browser is considered to be initiated from localhost (we've seen that on all 
+previous faulty screenshots, remember?). Default configuration of *status.conf* is as follows:
 
 ```
------BEGIN PGP MESSAGE-----
-Comment: GPGTools - https://gpgtools.org
-
-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
-xqFyAoH9galJVIQqKap8bWHxfaqVcerCeX+NDfOcXHb5IVEwfnuwKMhmCEOFVlBE
-cgrpkYymgdCVMF9o8SHiIg2eBWWXkuT1yjM5I7v7bX90D1pHqMW6nS4q16tLmnPQ
-dDgumrthMTYHNFLoepkf7I4w4Y4vdDc+cXm/QbQu0kmHMoIxCgituBhVdxvT+2jc
-lxsEcZyQv+x2oAfsb0RrcwMytLRULaM+xjp+ivSIoW+GORyxZRalSo2NBKMlHu25
-eB5SM2fW090mpOrmBuxHGM+PYC+0XOedNZjEE1+nUaGgvHBbDGfRUuSuckDzPGxC
-uKGthrLzWXGw4ESHh3AGOE10UCJu5jT3lka8YaTRkueSRaFhjK/7Ec3qQPHccneX
-BMPJljuCVc567XwnLIHpBTCdHPuyd2qYsmnFDyN1Z/vM3ukDIYX4vCEiyrT63d0S
-kk23S7cJVdGuWp0Ljr0bvnivA1Ri8rXgHuZyQtfS2g9ZAA/n+NRWh9Owicd9pDak
-7uGs49vSDRT5Y2kB36KDPAP8+dqOVZn/f5X3moe++pkPPAg88Ky/8NAXtn4PAF/y
-pf9vQfjdxfM+n33o98NW+C9f/fgb+Vc89er3fcP/pj76/K/4lfc8KbxF+sb/dn3d
-K50POM88/9zHHlp//Xn/9PM/8Vvf+IyPvPgN2FdE9Y/91Q+/639dX/WZn/n5dx4/
-ZT73Nz4ovPuBN+nRL35P/sjrsr/5gm/+rtt73/Ty6h3v/9XjPzT/9C3/6Af/9oef
-fOSFb/xl8Km3f/D1H/js5bl/+bOv+enf/gH/X3M/5lOfefhn8fnNT3ePlU98+yc+
-/vIH1//xTa9/6iW//fu/8HX4jwhfpb7a+7YXfu5JIPyy97+Bfu7H/+0nYfCx176V
-/K8f/09/Zv4VsX4W/g1f+Zec05tZ1XnOd5n/8R1//LHXfvA3X/3UY3/8Ze/4Iu3t
-z/u1zz/677//Rc/+9m8qk/e8+Omz/Ls/+OV/+o+/k37R8//PS68voH8yeeeHvP/w
-Qz/3Kf7rnv1WzfnEJx/78a994e8+8SsffY5Q/9nv/c/3KW/71j96mUn9wf6fPPk2
-4lHiIf133veGX3xw8xZp73/mHzxG/LvxR//kRZ9+9gdf+OS7v+o93/qbn3rFL/13
-9Ss/9eU//UnqlfCjP1p+5LO/zr42euJLtUcvj8DvNb/mA+//1Zf+3U+r34F94J99
-/ff954/9zrs3b/xa8a3//Huf/vDj7/vlV9x+/hd+6yng+571S+wj31urH3n078lP
-m3/rE89//HFxn773NS//4p/8+w/+yDO/3/zxv/b033j8bc/52Wf/q1f91G/89df9
-zJvmt3/u157+6CR+d/NU9SWh+okvftH6B9Azvv4n3vnhzwGvev23QK/4jvVPijd/
-5Pe6v/iuH/gXT3zRd/7hv7G/eYxe98Pw97z8XLzp/wI=
-=KBEd
------END PGP MESSAGE-----
+<Location /server-status>
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1 ::1
+#    Allow from 192.0.2.0/24
+</Location>
 ```
+
+In other words, since connection seems to come from a trustworthy source, it simply allows anyone to access it!
+Moreover, any user navigating on Tor seems to be more trusted than in non-Tor conditions, as both server and many applications just trust 127.0.0.1 more as local.
+<a href="http://blog.ircmaxell.com/2012/11/anatomy-of-attack-how-i-hacked.html">How I hacked StackOverflow</a>, indeed.
+
+So, for this specific case it might be enough to disable */server-status* or comment the line "Allow from 127.0.0.1 ::1". However, the problem is deeper - due 
+to the architecture of Tor solution, **all the applications in darknet** have to be reviewed to make sure there is no excessive trust to "local attacker", and 
+it sounds like the fight "Security vs. Privacy" continues.
+
+{% img center /images/6_smart_home.png 900 'image' 'images' %}
