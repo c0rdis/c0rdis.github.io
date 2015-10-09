@@ -4,7 +4,7 @@
   <title><![CDATA[0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-10-09T13:03:45+03:00</updated>
+  <updated>2015-10-09T17:03:24+03:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -175,7 +175,7 @@ Moreover, any user navigating on Tor seems to be more trusted than in non-Tor co
 to the architecture of Tor solution, <strong>all the applications in darknet</strong> have to be reviewed to make sure there is no excessive trust to &ldquo;local attacker&rdquo;, and
 it sounds like the fight &ldquo;Security vs. Privacy&rdquo; continues.</p>
 
-<p><img class="center" src="http://antukh.com/images/6_smart_home.png" width="900" title="image" alt="images"></p>
+<p><img class="center" src="http://antukh.com/images/6_tor_project.png" width="900" title="image" alt="images"></p>
 ]]></content>
   </entry>
   
