@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Otn | 0xAA - Random notes on security]]></title>
   <link href="http://antukh.com/blog/categories/otn/atom.xml" rel="self"/>
   <link href="http://antukh.com/"/>
-  <updated>2015-10-09T17:03:24+03:00</updated>
+  <updated>2015-10-23T18:39:15+02:00</updated>
   <id>http://antukh.com/</id>
   <author>
     <name><![CDATA[Authorized Attacker]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[One-time Notes]]></title>
     <link href="http://antukh.com/blog/2015/02/05/otnotes/"/>
-    <updated>2015-02-05T09:30:07+02:00</updated>
+    <updated>2015-02-05T08:30:07+01:00</updated>
     <id>http://antukh.com/blog/2015/02/05/otnotes</id>
     <content type="html"><![CDATA[<p>Always wanted to have my own version of Privnote to be sure of how the data is handled on the server&hellip; Finally, <a href="https://aan.sh/otnote">here it is</a>.</p>
 
