@@ -6,18 +6,18 @@ I hereby claim:
 
   * I am an admin of http://antukh.com
   * I am my (https://keybase.io/my) on keybase.
-  * I have a public key with fingerprint 8369 0890 72F5 6D41 4683  5B67 DB8A 25ED C46B 55C3
+  * I have a public key with fingerprint 31BE 210E D6C2 9E34 F669  56A4 4A28 20ED 84BE 20D7
 
 To do so, I am signing this object:
 
 {
     "body": {
         "key": {
-            "eldest_kid": "0101b25ddc0b2e9a91dacbf7bd79d9bf732a807c42dd3e4fd741f455db753e04edb80a",
-            "fingerprint": "8369089072f56d4146835b67db8a25edc46b55c3",
+            "eldest_kid": "01014c9223a91aded46b7cdeda0df715751737acdb881bd6679668a19dd02ec509310a",
+            "fingerprint": "31be210ed6c29e34f66956a44a2820ed84be20d7",
             "host": "keybase.io",
-            "key_id": "db8a25edc46b55c3",
-            "kid": "0101b25ddc0b2e9a91dacbf7bd79d9bf732a807c42dd3e4fd741f455db753e04edb80a",
+            "key_id": "4a2820ed84be20d7",
+            "kid": "01014c9223a91aded46b7cdeda0df715751737acdb881bd6679668a19dd02ec509310a",
             "uid": "25a139e53d082311085dda4987a6a300",
             "username": "my"
         },
@@ -28,35 +28,36 @@ To do so, I am signing this object:
         "type": "web_service_binding",
         "version": 1
     },
-    "ctime": 1445618309,
+    "ctime": 1495663596,
     "expire_in": 157680000,
-    "prev": "01a364a194786b343ffa40f901f784eb3689884ca60305f8eb0639d98bddd3b9",
-    "seqno": 26,
+    "prev": "4c678b3a3379f03abde839056ec9153d5a948866217f8587826c6c2abe204dc9",
+    "seqno": 47,
     "tag": "signature"
 }
 
 which yields the signature:
 
 -----BEGIN PGP MESSAGE-----
-Comment: GPGTools - https://gpgtools.org
+Version: Keybase OpenPGP v2.0.70
+Comment: https://keybase.io/crypto
 
-owGtUm1IFEEYPrXyI4qCBKPsYzNIk2N2Z3Z39jCkgigJu6IyMjtmdmZ1U2/Pu9Uy
-k4SKVAiCwKgQ+6CsH+WPkyCKpDRCpeyDiygqqLQiUgr6gMKaFfvXz+bPzPvO8zzz
-vA9zdEaKLyPpeevST32VW3qTBj9Q39Y82tIgUYfVS4EGqZJPbLyK8ZgbqrSZFJCA
-DGSqqIyZgCrcIIbMiEktnTLdYIY4QIVgoJtIYQxyZDEdyRZSVUZ1FXKAOKMYEClf
-suxwOY9GonbYFbIYagbABtAVS9UYkpGGoUo1XaCJonJmIo2qqgkFscKJeQxhjpIY
-99uO6IkiNGHvH/j/7Lt2Qk5RiQwNrkIGsAJlGWAhTZCBdaIRCIAHjPFomFRzga6u
-lxrzJVHX2Sb3IvVmmLwjYbe2ssJvOtWCE4k6rmM6VaJf4bqRgEdz6yMebjenoUmF
-ELXDTMQnCHU8GrOdsBSQBdJ0bU9SRkjVZAyBkS/xPRE7ykO2h1B1DQOxvGd43UQm
-BGqIyAbSsUYhCkLLIghYBpAtHSNOoYYNjJFJNACBamFOgQZFXJgykRI1JG+omrAj
-BRRNGCXlQjRml4eJWxvlUmNGS9L8Kb6kDN+0qcnez/JlpM/6+92sR6m/9/14MrKq
-5lVuT//TtMbhw+n+vJH0gds5ry/f6j34vjN9XnxQ72wueVE4s89MiX+6s7I4BR66
-FLyxY/Fzp/TMtq7iQ1duZ8ZHg/6X95XCX23LT7Q+WHK6uT24deexotXtG9u+LerK
-KhtLLMh61rD/bNNQ0d7xXXhOb0fru8RH9/ibs4/K+r9S+9T2tclrS/MGfmD/iiMl
-17uPFRzYfX5NwXj21Uja6NMc7WLPumu5asWy7oWrGho3jzVlv2lOy847+ezV96Hk
-jRsSNV8WOzfpQ2l23c9z99YUPFnyNhLg2cMnusxlvpbMOIlXdaRmre+/0BKfezeR
-NSf4efqmj9dnlz+e4vdf7voD
-=V56f
+yMIfAnicrVJbSBRRGF4vq7UlKl3AoJIhWiOVOXM5c2bpQnaRrvYQ0X05M+esTqsz
+28zslpQXSLBCMITwQZIINcuCwIogKDUDw7IoCLqQgQ8JJnR5MYW1M2JvPXZefv7/
+/77v/P93zmBWmi+QclSzdf9syUTKcH9z3Hd4bdq3s5xmkWoudJaL0rlAKwl13HDU
+IFyI4wEPJF0VBBGrABNKJKgpOouYJxEFyIoMFFHBOtEQAhqBUFEhRBiohPAC1WVe
+FQGPuUIuYpjl1I7ZhukyWRFoVAA8JVAXVCpKEQhVGWJJwgISWBlJrM8ThRErLMdj
+sOE07NBiw2I1loTnxvsH/j/PHZ+TE2QMRJXKIuGRIALAI5kQLKlIwRCLPO8BHWqb
+uIoydFU1V1PIsTxh6NSz1NthvodNNx6tKNatKsaJ2ZZr6VYlq1e4bizk0dzqmIc7
+TbXwvEJYM0zC7GOEBLUdwzK5EGBI3TU8SSAx66Aoq7CQo2dihk3DhoeQFYh4drxr
+aMIzS4cK0kQsiooa4UWsEYpElZch1VXAVpOxKiEEoQCUCJKRggSos/fBnrUS0VXO
+2+mUaXEhSWFz4nKm6RjlJnbjNuVqBvqOpftSAr4Mf6r3r3yBhTl/f9vkWGZSzXl1
+6+CpPRNFwfRrD15uye1bR0nL5Jrx7O3LC74G8682JDM+XTEzpz9HyqIbh6bRs3at
+caWwLHfBMPg587DpCtjY/bG3trehdMP+G22pl+JF72ea5bbnux0pL/ihY1Xh4o6i
+yQMFwanX/T2HqDC2o/1ti3M+byS5K5+f6lyy+d66O3f3zzrRkRfur/r4pumGRY2t
+YwOf/J1ZT0svyJFzKVlNI63mm6F+sWs87fuRZKKr+2Lgw9K6R723V93+su9mIpg9
+dT05WlXz+/EJuM0INPlX7NT2hqaOl/vrf5glT9Jf5bfduT96smx1YiBr8KO9/ljt
+y8Yc8Mao26r3WO/o5T+K9DnO
+=ZI1+
 -----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
