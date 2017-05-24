@@ -6,7 +6,7 @@ sharing: false
 footer: false
 ---
 Alexander is a passionate Security Expert for over 6 years (formally), always looking towards original challenges and opportunities to learn something new.
-He is a founder of <a href="http://defcon-moscow.org">Defcon Moscow</a> group and current leader of <a href="https://www.owasp.org/index.php/Russia">OWASP Russia</a> Local Chapter. 
+He is a founder of <a href="http://defcon-moscow.org">Defcon Moscow</a> group and current Board Member of <a href="https://www.owasp.org/index.php/Poland">OWASP Poland</a> Local Chapter. 
 His special interest is in the field of applied cryptography and in what is called "ethical hacking".
 
 For feedback or any requests please e-mail: alexander@antukh.com
