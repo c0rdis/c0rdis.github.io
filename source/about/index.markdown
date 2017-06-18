@@ -5,7 +5,7 @@ comments: false
 sharing: false
 footer: false
 ---
-Alexander is a passionate Security Expert for over 6 years (formally), always looking towards original challenges and opportunities to learn something new.
+Alexander is a passionate Security Expert for over 8 years (formally), always looking towards original challenges and opportunities to learn something new.
 He is a founder of <a href="http://defcon-moscow.org">Defcon Moscow</a> group and current Board Member of <a href="https://www.owasp.org/index.php/Poland">OWASP Poland</a> Local Chapter. 
 His special interest is in the field of applied cryptography and in what is called "ethical hacking".
 
